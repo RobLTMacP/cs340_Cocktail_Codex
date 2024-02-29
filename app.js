@@ -70,6 +70,23 @@ app.post('/add-ingredient-ajax', function (req, res) {
     })
 })
 
+// delete ingredient
+app.delete('/delete-ingredient-ajax', function(req, res, next){
+    let data = req.body;
+    let ingredientID = parseInt(data.id);
+    let deleteIngredient = `DELETE FROM Ingredients WHERE pid = ?`;
+
+    db.pool.query(deleteIngredient, [ingredientID], function(error, rows, fields){
+        if (error){
+            console.log(error);
+            res.sendStatus(400);
+        }
+        else {
+            res.sendStatus(204);
+        }
+    })
+})
+
 
 /*CATEGORIES*/
 app.get('/categories', function (req, res) {

@@ -68,15 +68,26 @@ addRowToTable = (data) => {
     let nameCell = document.createElement("TD");
     let amountCell = document.createElement("TD");
 
+    let deleteCell = document.createElement("TD");
+
     // Fill the cells with correct data
     idCell.innerText = newRow.id;
     nameCell.innerText = newRow.ingredientName;
     amountCell.innerText = newRow.amountOnHand;
 
+    deleteCell = document.createElement("button");
+    deleteCell.innerHTML = "Delete";
+    deleteCell.onclick = function(){
+        deleteIngredient(newRow.id);
+    }
+
     // Add the cells to the row 
     row.appendChild(idCell);
     row.appendChild(nameCell);
     row.appendChild(amountCell);
+    row.appendChild(deleteCell)
+
+    row.setAttribute('data-value', newRow.id);
 
     // Add the row to the table
     currentTable.appendChild(row);
