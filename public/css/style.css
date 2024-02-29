@@ -8,7 +8,8 @@
   --lightGold: #ddd2ac;
   --darkGold: #524d3a;
   --superGold: #FFCC14;
-  --white: #FFFFFF
+  --white: #FFFFFF;
+  --dangerZone: #7E1111;
 }
 
 body {
@@ -110,12 +111,28 @@ input {
   background-color: var(--lightGold);
   color: var(--black);
   border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 select {
   background-color: var(--lightGold);
   color: var(--black);
   border: 1px solid #ccc;
+}
+
+button {
+  background-color: var(--lightGold);
+  color: var(--dangerZone);
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-weight: 700;
+}
+
+select {
+  background-color: var(--lightGold);
+  color: var(--black);
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 /*THESE DON'T REALLY WORK*/

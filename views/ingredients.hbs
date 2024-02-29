@@ -1,4 +1,5 @@
-<!-- index.hbs -->
+<h2>The Ingredients</h2>
+<br>
 
 {{!-- Create a table --}}
 <table id="ingredients-table">
@@ -21,7 +22,7 @@
     {{!-- Body section --}}
     <tbody>
 
-        {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
+        {{!-- For each row, print info in order --}}
         {{#each data}}
         <tr data-value={{this.id}}>
             <td>{{this.id}}</td>
@@ -34,7 +35,7 @@
 </table>
 
 {{!-- Form to add a record to the table --}}
-<h2>Add Data</h2>
+<h3>Add Ingredient</h3>
 <p>To add a new ingredient, please enter the information below and click 'Submit'!</p>
 <form id="add-ingredient-form-ajax">
     <label for="input-name">Ingredient Name: </label>
@@ -47,7 +48,7 @@
 </form>
 
 {{!-- Form to update a record to the table --}}
-<h2>Update Ingredient:</h2>
+<h3>Update Ingredient:</h3>
 <form id="update-ingredient-form-ajax">
 
     <label for="input-name">Ingredient name: </label>
@@ -58,7 +59,7 @@
         {{/each}}
     </select>
 
-   <label for="input-amount">Amount on hand: </label>
+    <label for="input-amount">Amount on hand: </label>
     <input type="text" name="input-amount" id="input-update-amount">
     <input type="submit">
 
