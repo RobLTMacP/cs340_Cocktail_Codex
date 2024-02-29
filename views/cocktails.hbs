@@ -1,0 +1,136 @@
+<div>
+  <h2>The Cocktails</h2>
+  <br>
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Instructions</th>
+      <th>Amount Used (in ounces)</th>
+      <th>Ingredients</th>
+      <th>Glass</th>
+      <th>Category</th>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>Old Fashioned</td>
+      <td>Muddle sugar, bitters,
+        and cherry before
+        adding bourbon.
+        Garnish with orange
+        twist</td>
+      <td>2 <br> 1 <br> .1 <br> .25 <br></td>
+      <td>Bourbon <br> Cherry <br> Bitters <br> Sugar <br></td>
+      <td>Rocks</td>
+      <td>Old Fashioned</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Rusty Nail</td>
+      <td>Stir Scotch and Drambuie. Garnish with Lemon Twist</td>
+      <td>2 <br> 1 <br> 1 <br></td>
+      <td>Scotch <br> Drambuie <br> Lemon Twist <br></td>
+      <td>Rocks</td>
+      <td>Old Fashioned</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Negroni</td>
+      <td>Stir gin, sweet vermouth, campari</td>
+      <td>1 <br> 1 <br> 1 <br></td>
+      <td>Gin, Sweet Vermouth, Campari</td>
+      <td>Rocks</td>
+      <td>Old Fashioned</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Brandy Alexander</td>
+      <td>Shake egg, cream, sugar, brandy</td>
+      <td>1 <br> 1 <br> .25 <br> 2 <br></td>
+      <td>Egg <br> Cream <br> Sugar <br> Brandy <br></td>
+      <td>Coupe</td>
+      <td>Flip</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Tom Collins</td>
+      <td>Add gin, sugar, lemon juice to glass. Top with Soda.</td>
+      <td>2 <br> .5 <br> .75 <br> 4 <br> </td>
+      <td>Gin <br> Sugar <br> Lemon <br> Soda <br></td>
+      <td>Collins</td>
+      <td>Highball</td>
+    </tr>
+  </table>
+
+  <div>
+    <div>
+      <h3>ADD COCKTAIL:</h3>
+      <form>
+        <label>
+          Name:
+          <input type="text">
+        </label><br>
+        <label>
+          Instructions:
+          <input type="text">
+        </label><br>
+        <label>
+          Glass:
+          <input type="text">
+        </label><br>
+        <label>
+          Drink Category (By ID#):
+          <input type="radio" name="drink_category" value="1"> 1: Old Fashioned
+          <input type="radio" name="drink_category" value="2"> 2: Daiquiri
+          <input type="radio" name="drink_category" value="3"> 3: Martini
+          <input type="radio" name="drink_category" value="4"> 4: Highball
+          <input type="radio" name="drink_category" value="5"> 5: Flip
+          <input type="radio" name="drink_category" value="6"> 6: Sidecar
+        </label><br>
+        <label>
+          Name:
+          <input type="text">
+        </label><br>
+        <input type="submit" value="Add Cocktail">
+      </form>
+    </div>
+    <div>
+      <h3>UPDATE COCKTAIL: </h3>
+      <form>
+        <label>Select a Cocktail to Update:</label>
+        <label>
+          <select name="cocktails">
+            <option value="old-fashioned">Old Fashioned</option>
+            <option value="rusty-nail">Rusty Nail</option>
+            <option value="negroni">Negroni</option>
+            <option value="brandy-alexander">Brandy Alexander</option>
+            <option value="tom-collins">Tom Collins</option>
+          </select>
+        </label>
+        <br>
+        <label>
+          Instructions:
+          <input type="text">
+        </label><br>
+        <label>
+          Glass:
+          <input type="text">
+        </label><br>
+        <label>
+          Drink Category (By ID#):
+          <input type="radio" name="drink_category" value="1"> 1: Old Fashioned
+          <input type="radio" name="drink_category" value="2"> 2: Daiquiri
+          <input type="radio" name="drink_category" value="3"> 3: Martini
+          <input type="radio" name="drink_category" value="4"> 4: Highball
+          <input type="radio" name="drink_category" value="5"> 5: Flip
+          <input type="radio" name="drink_category" value="6"> 6: Sidecar
+        </label><br>
+        <label>
+          Name:
+          <input type="text">
+        </label><br>
+        <input type="submit" value="Update">
+        <input type="submit" value="Delete">
+      </form>
+    </div>
+  </div>

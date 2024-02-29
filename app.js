@@ -70,8 +70,42 @@ app.post('/add-ingredient-ajax', function (req, res) {
     })
 })
 
-/*NEXT PAGE*/
 
+/*CATEGORIES*/
+app.get('/categories', function (req, res) {
+    res.render('categories');
+});
+
+
+/*COCKTAIL INGREDIENTS*/
+app.get('/cocktailIngredients', function (req, res) {
+    res.render('cocktailIngredients');
+});
+
+/*COCKTAILS*/
+app.get('/cocktails', function (req, res) {
+    res.render('cocktails');
+});
+
+/*COCKTAIL TOOLS*/
+app.get('/cocktailtools', function (req, res) {
+    res.render('cocktailtools');
+});
+
+/*CUSTOMERS*/
+app.get('/customers', function (req, res) {
+    res.render('customers');
+});
+
+/*DRINK CATEGORIES CUSTOMERS*/
+app.get('/drinkCategoriesCustomers', function (req, res) {
+    res.render('drinkCategoriesCustomers');
+});
+
+/*TOOLS*/
+app.get('/tools', function (req, res) {
+    res.render('tools');
+});
 
 
 
