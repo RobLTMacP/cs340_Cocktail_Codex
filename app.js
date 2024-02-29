@@ -71,13 +71,13 @@ app.post('/add-ingredient-ajax', function (req, res) {
 })
 
 // delete ingredient
-app.delete('/delete-ingredient-ajax', function(req, res, next){
+app.delete('/delete-ingredient-ajax', function (req, res, next) {
     let data = req.body;
     let ingredientID = parseInt(data.id);
     let deleteIngredient = `DELETE FROM Ingredients WHERE id = ?`;
 
-    db.pool.query(deleteIngredient, [ingredientID], function(error, rows, fields){
-        if (error){
+    db.pool.query(deleteIngredient, [ingredientID], function (error, rows, fields) {
+        if (error) {
             console.log(error);
             res.sendStatus(400);
         }
@@ -88,30 +88,28 @@ app.delete('/delete-ingredient-ajax', function(req, res, next){
 })
 
 // update ingredient
-app.put('/put-ingredient-ajax', function(req, res, next) {
+app.put('/put-ingredient-ajax', function (req, res, next) {
 
     let data = req.body;
 
-    let ingredient = parseInt(data.name);
-    let amount = parseInt(data.amount)
+    let ingredientID = parseInt(data.ID);
+    let amount = parseFloat(data.amount);
 
-    let queryUpdateIngredient = `UPDATE Ingredients SET amountOnHand = ? WHERE Ingredients.id = ?`;
-    let selectIngredients = `SELECT * from Ingredients WHERE id = ?`
+    queryUpdateIngredient = `UPDATE Ingredients SET amountOnHand = ? WHERE id = ?`;
+    selectIngredient = `SELECT * from Ingredients WHERE id = ?`
 
-    db.pool.query(queryUpdateIngredient, [ingredient, amount], function(error, rows, fields){
-        if (error){
+    db.pool.query(queryUpdateIngredient, [amount, ingredientID], function (error, rows, fields) {
+        if (error) {
             console.log(error)
             res.sendStatus(400);
         }
-        else
-        {
-            db.pool.query(selectIngredients, [ingredient], function(error, rows, fields) {
-                if (error){
+        else {
+            db.pool.query(selectIngredient, [ingredientID], function (error, rows, fields) {
+                if (error) {
                     console.log(error);
                     res.sendStatus(400);
                 }
-                else
-                {
+                else {
                     res.send(rows);
                 }
             })

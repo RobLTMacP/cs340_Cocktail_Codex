@@ -1,22 +1,22 @@
 let updateIngredientForm = document.getElementById('update-ingredient-form-ajax');
 
 // modify the objects we need
-updatePersonForm.addEventListener("submit", function (e) {
+updateIngredientForm.addEventListener("submit", function (e) {
 
     //prevent form from submitting
     e.preventDefault();
 
     // Get form fields we need to get data from
-    let inputName = document.getElementById("mySelect");
+    let inputID = document.getElementById("mySelect");
     let inputAmount = document.getElementById("input-update-amount");
 
     // get the values from form fields
-    let nameValue = inputName.value;
+    let IDValue = inputID.value;
     let amountValue = inputAmount.value;
 
     // put data we want to send in a js object
     let data = {
-        name: nameValue,
+        ID: IDValue,
         amount: amountValue
     }
 
@@ -30,7 +30,7 @@ updatePersonForm.addEventListener("submit", function (e) {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
 
             // Add the new data to the table
-            updateRow(xhttp.response, nameValue);
+            updateRow(xhttp.response, IDValue);
 
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {
@@ -42,15 +42,16 @@ updatePersonForm.addEventListener("submit", function (e) {
     xhttp.send(JSON.stringify(data));
 })
 
-function updateRow(data, personID){
+function updateRow(data, ID) {
     let parsedData = JSON.parse(data);
-    
+    console.log(parsedData);
+
     let table = document.getElementById("ingredients-table");
 
     for (let i = 0, row; row = table.rows[i]; i++) {
-       //iterate through rows
-       //rows would be accessed using the "row" variable assigned in the for loop
-       if (table.rows[i].getAttribute("data-value") == ingredientID) {
+        //iterate through rows
+        //rows would be accessed using the "row" variable assigned in the for loop
+        if (table.rows[i].getAttribute("data-value") == ID) {
 
             // Get the location of the row where we found the matching ingredient ID
             let updateRowIndex = table.getElementsByTagName("tr")[i];
@@ -59,7 +60,7 @@ function updateRow(data, personID){
             let td = updateRowIndex.getElementsByTagName("td")[2];
 
             // Reassign amount to our value we updated to
-            td.innerHTML = parsedData[0].name; 
-       }
+            td.innerHTML = parsedData[0].amountOnHand;
+        }
     }
 }
