@@ -3,7 +3,7 @@ let addIngredientForm = document.getElementById('add-ingredient-form-ajax');
 
 // Modify the objects we need
 addIngredientForm.addEventListener("submit", function (e) {
-    
+
     // Prevent the form from submitting
     e.preventDefault();
 
@@ -18,9 +18,9 @@ addIngredientForm.addEventListener("submit", function (e) {
     // Put our data we want to send in a javascript object
     let data = {
         name: nameValue,
-        amount: amountValue,
+        amountOnHand: amountValue,
     }
-    
+
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest();
     xhttp.open("POST", "/add-ingredient-ajax", true);
@@ -77,7 +77,7 @@ addRowToTable = (data) => {
     row.appendChild(idCell);
     row.appendChild(nameCell);
     row.appendChild(amountCell);
-    
+
     // Add the row to the table
     currentTable.appendChild(row);
 }

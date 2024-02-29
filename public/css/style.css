@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;600;900&family=Rubik:wght@300;600;900&display=swap');
+
+:root {
+  --black: #000000;
+  --darkGrey: #595959;
+  --darkerGrey: #292929;
+  --darkestGrey: #1f1f1f;
+  --lightGold: #ddd2ac;
+  --darkGold: #524d3a;
+  --superGold: #FFCC14;
+  --white: #FFFFFF
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(112.1deg, var(--black) 5%, var(--darkGrey) 100%);
+  background-size: cover;
+  color: var(--white);
+  font-family: 'Noto Sans', sans-serif;
+
+}
+
+table {
+  border-collapse: collapse;
+  /*hmmm keep border-collapse?*/
+  max-width: 1280px;
+  padding: 3px;
+  border-color: var(--lightGold);
+  border-radius: 8px 8px 8px 8px;
+  border-style: hidden;
+  border: 0px transparent;
+  /*box-shadow: 0 0 0 1px var(--lightGold);*/
+  display: inline-block;
+  box-sizing: border-box;
+  background-color: var(--lightGold);
+}
+
+
+th {
+  border: 1px solid var(--lightGold);
+  background-color: var(--darkerGrey);
+  padding: 4px;
+  /*border-radius: 10px 10px 10px 10px;*/
+  box-sizing: border-box;
+}
+
+td {
+  border: 1px solid var(--lightGold);
+  background-color: var(--black);
+  padding: 4px;
+  /*border-radius: 10px 10px 10px 10px;*/
+  box-sizing: border-box;
+}
+
+form {
+  border-collapse: collapse;
+  padding: 4px;
+  border-radius: 10px 10px 10px 10px;
+  border-style: hidden;
+  box-shadow: 0 0 0 1px var(--darkGrey);
+  max-width: 1280px;
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+.navbar {
+  padding: 1px 1%;
+  color: var(--superGold);
+}
+
+a:link,
+a:visited,
+a:hover,
+a:active {
+  color: var(--superGold);
+  text-decoration: none;
+}
+
+img {
+  float: left;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+main {
+  background-color: var(--darkestGrey);
+  padding: 5px 1% 1% 1%;
+
+}
+
+section {
+  background-color: var(--darkestGrey);
+  padding: 1% 1% 1% 1%;
+  max-width: 1280px;
+  min-width: 680px;
+}
+
+article {}
+
+
+footer {
+  color: var(--lightGold);
+  background-color: var(--darkerGrey);
+  padding: 1px 1%;
+}
+
+/* Text fields */
+input {
+  background-color: var(--lightGold);
+  color: var(--black);
+  border: 1px solid #ccc;
+}
+
+select {
+  background-color: var(--lightGold);
+  color: var(--black);
+  border: 1px solid #ccc;
+}
+
+/*THESE DON'T REALLY WORK*/
+/* Radio buttons
+input[type="radio"] {}
+
+/* Radio button labels */
+/*input[type="radio"]+label {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: var(--superGold);
+  color: var(--lightGold) border-radius: 5px;
+}
+
+/* Checked state of radio buttons */
+/*input[type="radio"]:checked+label {
+  font-weight: bold;
+  background-color: var(--superGold);
+  color: var(--lightGold)
+}

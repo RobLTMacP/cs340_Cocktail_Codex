@@ -1,48 +1,42 @@
-<!-- index.hbs -->
+<h2>The Codex</h2>
 
-{{!-- Create a table --}}
-<table id="ingredients-table">
+<p>Cocktail Codex is a cocktail recipe book web app that stores and displays classic and user-added recipes, to
+  ensure consistency among staff, proper usage of inventory, and to eliminate waste and spillage for busy
+  nightlife
+  businesses. A database-driven backend records cocktail ingredients and recipes these ingredients can be used in.
+  It
+  also
+  relates amongst the different sub-categories of cocktails, allowing for seamless guest experiences by creating
+  recipe
+  based recommendations for similar ingredients and taste preferences. Each item is tracked by its own inventory
+  attribute, allowing for the business to keep track of all items in house.</p>
 
-    {{!-- Header section --}}
-    <thead>
+<br><br>
 
-        {{!-- For just the first row, we print each key of the row object as a header cell so we
-        know what each column means when the page renders --}}
-        <tr>
-            {{#each data.[0]}}
-            <th>
-                {{@key}}
-            </th>
-            {{/each}}
-        </tr>
-    </thead>
-
-    {{!-- Body section --}}
-    <tbody>
-
-        {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
-        {{#each data}}
-        <tr>
-            <td>{{this.id}}</td>
-            <td>{{this.ingredientName}}</td>
-            <td>{{this.amountOnHand}}</td>
-        </tr>
-        {{/each}}
-    </tbody>
+<table>
+  <tr>
+    <th>Table</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Cocktails</td>
+    <td>Contains all info about individual cocktail recipes.</td>
+  </tr>
+  <tr>
+    <td>Ingredients</td>
+    <td>Contains all info about the ingredients used in cocktail production.</td>
+  </tr>
+  <tr>
+    <td>Tools</td>
+    <td>Contains all info about the tools needed for production.</td>
+  </tr>
+  <tr>
+    <td>Customers</td>
+    <td>Contains all info about our customers and their preferences.</td>
+  </tr>
+  <tr>
+    <td>Drink Categories</td>
+    <td>Contains all info about the categories of cocktail recipes.</td>
+  </tr>
 </table>
-
-{{!-- Form to add a record to the table  --}}
-<h2>Adding Data with AJAX</h2>
-<p>To add a new ingredient, please enter the information below and click 'Submit'!</p>
-<form id="add-ingredient-form-ajax">
-    <label for="input-name">Ingredient Name: </label>
-    <input type="text" name="input-name" id="input-name">
-    
-    <label for="input-amount">Amount on hand: </label>
-    <input type="text" name="input-amount" id="input-amount">
-
-    <input type="submit">
-</form>
-
-{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
-<script src="../public/js/add_ingredient.js"></script>
+<br>
