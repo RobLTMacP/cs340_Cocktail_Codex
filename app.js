@@ -74,7 +74,7 @@ app.post('/add-ingredient-ajax', function (req, res) {
 app.delete('/delete-ingredient-ajax', function(req, res, next){
     let data = req.body;
     let ingredientID = parseInt(data.id);
-    let deleteIngredient = `DELETE FROM Ingredients WHERE pid = ?`;
+    let deleteIngredient = `DELETE FROM Ingredients WHERE id = ?`;
 
     db.pool.query(deleteIngredient, [ingredientID], function(error, rows, fields){
         if (error){

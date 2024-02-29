@@ -34,7 +34,7 @@
 </table>
 
 {{!-- Form to add a record to the table --}}
-<h2>Adding Data with AJAX</h2>
+<h2>Add Data</h2>
 <p>To add a new ingredient, please enter the information below and click 'Submit'!</p>
 <form id="add-ingredient-form-ajax">
     <label for="input-name">Ingredient Name: </label>
@@ -46,6 +46,25 @@
     <input type="submit">
 </form>
 
+{{!-- Form to update a record to the table --}}
+<h2>Update Ingredient:</h2>
+<form id="update-ingredient-form-ajax">
+
+    <label for="input-name">Ingredient name: </label>
+    <select name="input-name" id="mySelect">
+        <option value="">Select an ingredient</option>
+        {{#each data}}
+        <option value="{{this.id}}">{{this.ingredientName}}</option>
+        {{/each}}
+    </select>
+
+   <label for="input-amount">Amount on hand: </label>
+    <input type="text" name="input-amount" id="input-update-amount">
+    <input type="submit">
+
+</form>
+
 {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
-<script src="./js/delete_ingredient.js"></script>
 <script src="./js/add_ingredient.js"></script>
+<script src="./js/delete_ingredient.js"></script>
+<script src="./js/update_ingredient.js"></script>
