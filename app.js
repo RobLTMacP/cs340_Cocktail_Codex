@@ -87,6 +87,38 @@ app.delete('/delete-ingredient-ajax', function(req, res, next){
     })
 })
 
+// update ingredient
+app.put('/put-ingredient-ajax', function(req, res, next) {
+
+    let data = req.body;
+
+    let ingredient = parseInt(data.name);
+    let amount = parseInt(data.amount)
+
+    let queryUpdateIngredient = `UPDATE Ingredients SET amountOnHand = ? WHERE Ingredients.id = ?`;
+    let selectIngredients = `SELECT * from Ingredients WHERE id = ?`
+
+    db.pool.query(queryUpdateIngredient, [ingredient, amount], function(error, rows, fields){
+        if (error){
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else
+        {
+            db.pool.query(selectIngredients, [ingredient], function(error, rows, fields) {
+                if (error){
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                else
+                {
+                    res.send(rows);
+                }
+            })
+        }
+    })
+})
+
 
 /*CATEGORIES*/
 app.get('/categories', function (req, res) {
