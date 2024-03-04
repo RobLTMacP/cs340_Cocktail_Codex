@@ -8,7 +8,7 @@ var app = express();            // We need to instantiate an express object to i
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(__dirname + '/public'));
-PORT = 9124;                 // Set a port number at the top so it's easy to change in the future
+PORT = 9731;                 // Set a port number at the top so it's easy to change in the future
 // Database
 var db = require('./database/db-connector')
 const { engine } = require('express-handlebars');
@@ -92,7 +92,7 @@ app.put('/put-ingredient-ajax', function (req, res, next) {
 
     let data = req.body;
 
-    let ingredientID = parseInt(data.ID);
+    let ingredientID = parseInt(data.id);
     let amount = parseFloat(data.amount);
 
     queryUpdateIngredient = `UPDATE Ingredients SET amountOnHand = ? WHERE id = ?`;
@@ -135,8 +135,8 @@ app.get('/cocktails', function (req, res) {
 });
 
 /*COCKTAIL TOOLS*/
-app.get('/cocktailtools', function (req, res) {
-    res.render('cocktailtools');
+app.get('/cocktailTools', function (req, res) {
+    res.render('cocktailTools');
 });
 
 /*CUSTOMERS*/
