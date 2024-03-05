@@ -1,79 +1,83 @@
-      <h2>The Categories</h2>
+<h2>The Categories</h2>
 
-      <table>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Description</th>
-        </tr>
-        <tr>
-          <td>1</td>
-          <td>Old Fashioned</td>
-          <td>Stirred spirit on ice with sweet component</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Daiquiri</td>
-          <td>Shaken spirit served up with lime</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>Martini</td>
-          <td>Stirred spirit served up with no additional sweetener</td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>Highball</td>
-          <td>Spirit with soda or bubbles</td>
-        </tr>
-        <tr>
-          <td>5</td>
-          <td>Flip</td>
-          <td>Spirit with cream and egg</td>
-        </tr>
-        <tr>
-          <td>6</td>
-          <td>Sidecar</td>
-          <td>Shaken spirit with lemon</td>
-        </tr>
-      </table>
+{{!-- Create a table --}}
+<table id="categories-table">
 
-      <h3>ADD CATEGORY:</h3>
-      <form>
-        <label>
-          Name:
-          <input type="text">
-        </label><br>
-        <label>
-          Description:
-          <input type="text">
-        </label><br>
-        <input type="submit" value="Add Category">
-      </form>
+  {{!-- Header section --}}
+  <thead>
 
-      <h3>UPDATE CATEGORY:</h3>
+    {{!-- For just the first row, we print each key of the row object as a header cell so we
+    know what each column means when the page renders --}}
+    <tr>
+      {{#each data.[0]}}
+      <th>
+        {{@key}}
+      </th>
+      {{/each}}
+      <th>delete</th>
+    </tr>
+  </thead>
 
-      <form>
-        <label>Select a Category to Modify:</label>
-        <label>
-          <select name="categories">
-            <option value="Old Fashioned">Old Fashioned</option>
-            <option value="Daiquiri">Daiquiri</option>
-            <option value="Martini">Martini</option>
-            <option value="Highball">Highball</option>
-            <option value="Flip">Flip</option>
-            <option value="Sidecar">Sidecar</option>
-          </select>
-        </label>
-        <br>
-        <label>
-          Name:
-          <input type="text">
-        </label><br>
-        <label>
-          Description:
-          <input type="text">
-        </label><br>
-        <input type="submit" value="Update">
-        <input type="submit" value="Delete">
-      </form>
+  {{!-- Body section --}}
+  <tbody>
+
+    {{!-- For each row, print info in order --}}
+    {{#each data}}
+    <tr data-value={{this.id}}>
+      <td>{{this.id}}</td>
+      <td>{{this.category}}</td>
+      <td>{{this.description}}</td>
+      <td><button class="delete-button" onclick="deleteCategory({{this.id}})">Delete</button></td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+{{!-- Form to add a record to the table --}}
+<h3>Add Category:</h3>
+<p>To add a new category, please enter the information below and click 'Submit'!</p>
+<form id="add-category-form-ajax">
+  <label for="input-name">Category Name: </label>
+  <input type="text" name="input-name" id="input-name">
+
+  <label for="input-description">
+    <br>
+    Description: </label><br>
+  <textarea class="large" name="input-description" rows="4" cols="50" id="input-description"></textarea>
+
+  <br>
+  <br>
+  <input type="submit" class="submit-button" style="float: right;">
+</form>
+
+{{!-- Form to update a record to the table --}}
+<h3>Update Category:</h3>
+<form id="update-category-form-ajax">
+
+  <label for="input-name">Choose Category: </label>
+  <select name="input-name" id="mySelect" onchange="populateFields(this.value)">
+    <option value="">Select Category</option>
+    {{#each data}}
+    <option value="{{this.id}}">{{this.category}}</option>
+    {{/each}}
+  </select>
+
+  <form id="add-category-form-ajax">
+    <label for="input-update-name"><br>Update Name: </label>
+    <input type="text" name="input-update-name" id="input-update-name">
+
+    <label for="input-description">
+      <br>
+      Update Description: </label><br>
+    <textarea class="large" name="input-description" rows="4" cols="50" id="input-update-description"></textarea>
+
+    <br>
+    <br>
+    <input type="submit" class="submit-button" style="float: right;">
+
+  </form>
+
+  {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+  <script src="./js/add_category.js"></script>
+  <script src="./js/delete_category.js"></script>
+  <script src="./js/update_category.js"></script>

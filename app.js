@@ -95,10 +95,10 @@ app.put('/put-ingredient-ajax', function (req, res, next) {
     let ingredientID = parseInt(data.id);
     let amount = parseFloat(data.amount);
 
-    queryUpdateIngredient = `UPDATE Ingredients SET amountOnHand = ? WHERE id = ?`;
+    queryUpdateIngredient = `UPDATE Ingredients SET ingredientName = ?, amountOnHand = ? WHERE id = ?`;
     selectIngredient = `SELECT * from Ingredients WHERE id = ?`
 
-    db.pool.query(queryUpdateIngredient, [amount, ingredientID], function (error, rows, fields) {
+    db.pool.query(queryUpdateIngredient, [data.name, amount, ingredientID], function (error, rows, fields) {
         if (error) {
             console.log(error)
             res.sendStatus(400);
@@ -120,8 +120,92 @@ app.put('/put-ingredient-ajax', function (req, res, next) {
 
 /*CATEGORIES*/
 app.get('/categories', function (req, res) {
-    res.render('categories');
+    let query1 = "SELECT * FROM DrinkCategories;";               // Define our query
+
+    db.pool.query(query1, function (error, rows, fields) {    // Execute the query
+
+        res.render('categories', { data: rows });                  // Render the index.hbs file, and also send the renderer
+    })                                                      // an object where 'data' is equal to the 'rows' we
 });
+
+app.post('/add-category-ajax', function (req, res) {
+    // capture incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // capture null values
+    let description = data.description ? data.description : null;
+
+
+    // create a query and run it on the DB   
+    query1 = "INSERT INTO DrinkCategories (category, description) VALUES (?, ?)";
+    db.pool.query(query1, [data.category, data.description], function (error, results) {
+
+        // error check
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        }
+        else {
+            query2 = `SELECT * FROM DrinkCategories;`;
+            db.pool.query(query2, function (error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                else {
+                    res.send(rows);
+                }
+            })
+        }
+    })
+})
+
+// delete category
+app.delete('/delete-category-ajax', function (req, res, next) {
+    let data = req.body;
+    let categoryID = parseInt(data.id);
+    let deleteCategory = `DELETE FROM DrinkCategories WHERE id = ?`;
+
+    db.pool.query(deleteCategory, [categoryID], function (error, rows, fields) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        }
+        else {
+            res.sendStatus(204);
+        }
+    })
+})
+
+// update category
+app.put('/put-category-ajax', function (req, res, next) {
+
+    let data = req.body;
+    console.log(req.body);
+    let categoryID = parseInt(data.id);
+
+
+    queryUpdateCategory = `UPDATE DrinkCategories SET category = ?, description = ? WHERE id = ?`;
+    selectCategory = `SELECT * from DrinkCategories WHERE id = ?`
+
+    db.pool.query(queryUpdateCategory, [data.category, data.description, categoryID], function (error, rows, fields) {
+        if (error) {
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else {
+            db.pool.query(selectCategory, [categoryID], function (error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                else {
+                    res.send(rows);
+                }
+            })
+        }
+    })
+})
 
 
 /*COCKTAIL INGREDIENTS*/

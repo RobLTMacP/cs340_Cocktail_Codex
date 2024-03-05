@@ -41,27 +41,37 @@
     <label for="input-name">Ingredient Name: </label>
     <input type="text" name="input-name" id="input-name">
 
+    <br>
     <label for="input-amount">Amount on hand: </label>
     <input type="text" name="input-amount" id="input-amount">
 
-    <input type="submit">
+    <br>
+    <br>
+    <input type="submit" class="submit-button" style="float: right;">
 </form>
 
 {{!-- Form to update a record to the table --}}
 <h3>Update Ingredient:</h3>
 <form id="update-ingredient-form-ajax">
 
-    <label for="input-name">Ingredient name: </label>
-    <select name="input-name" id="mySelect">
+    <label for="input-name">Choose Ingredient: </label>
+    <select name="input-name" id="mySelect" onchange="populateFields(this.value)">
         <option value="">Select an ingredient</option>
         {{#each data}}
         <option value="{{this.id}}">{{this.ingredientName}}</option>
         {{/each}}
     </select>
 
-    <label for="input-amount">Amount on hand: </label>
+    <label for="input-update-name"><br>Update Name: </label>
+    <input type="text" name="input-update-name" id="input-update-name">
+    <br>
+
+    <label for="input-amount">Update Amount on hand: </label>
     <input type="text" name="input-amount" id="input-update-amount">
-    <input type="submit">
+
+    <br>
+    <br>
+    <input type="submit" class="submit-button" style="float: right;">
 
 </form>
 

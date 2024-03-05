@@ -106,12 +106,22 @@ input {
   color: var(--black);
   border: 1px solid #ccc;
   border-radius: 5px;
-  cursor: pointer;
+  cursor: auto;
 }
+
 
 button {
   background-color: var(--lightGold);
   color: var(--dangerZone);
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.submit-button {
+  background-color: var(--lightGold);
+  color: var(--black);
   border: 1px solid #ccc;
   border-radius: 5px;
   font-weight: 700;
@@ -133,6 +143,18 @@ select {
   border: 1px solid #ccc;
   border-radius: 5px;
   cursor: pointer;
+}
+
+
+textarea.large {
+
+  height: 50px;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 16px;
+  box-shadow: 1px 1px 2px #eee;
+  resize: inline;
+  background-color: var(--lightGold);
 }
 
 /*THESE DON'T REALLY WORK*/
