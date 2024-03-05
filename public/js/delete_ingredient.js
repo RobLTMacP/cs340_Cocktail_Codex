@@ -25,15 +25,23 @@ function deleteIngredient(ingredientID) {
 }
 
 
-function deleteRow(ingredientID){
+function deleteRow(ingredientID) {
 
     let table = document.getElementById("ingredients-table");
     for (let i = 0, row; row = table.rows[i]; i++) {
-       //iterate through rows
-       //rows would be accessed using the "row" variable assigned in the for loop
-       if (table.rows[i].getAttribute("data-value") == ingredientID) {
+        //iterate through rows
+        //rows would be accessed using the "row" variable assigned in the for loop
+        if (table.rows[i].getAttribute("data-value") == ingredientID) {
             table.deleteRow(i);
             break;
-       }
+        }
+    }
+
+    let selectMenu = document.getElementById("mySelect");
+    for (let i = 0; i < selectMenu.options.length; i++) {
+        if (selectMenu.options[i].value == ingredientID) {
+            selectMenu.remove(i);
+            break;
+        }
     }
 }

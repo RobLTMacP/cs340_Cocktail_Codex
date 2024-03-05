@@ -28,7 +28,7 @@
             <td>{{this.id}}</td>
             <td>{{this.ingredientName}}</td>
             <td>{{this.amountOnHand}}</td>
-            <td><button onclick="deleteIngredient({{this.id}})">Delete</button></td>
+            <td><button class="delete-button" onclick="deleteIngredient({{this.id}})">Delete</button></td>
         </tr>
         {{/each}}
     </tbody>

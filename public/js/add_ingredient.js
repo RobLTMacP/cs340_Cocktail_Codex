@@ -70,16 +70,30 @@ addRowToTable = (data) => {
 
     let deleteCell = document.createElement("TD");
 
+    let deleteButton = document.createElement("button");
+    deleteButton.classList.add("delete-button");
+    deleteButton.textContent = "Delete";
+    deleteButton.onclick = function () {
+        deleteIngredient(newRow.id);
+    };
+
     // Fill the cells with correct data
     idCell.innerText = newRow.id;
     nameCell.innerText = newRow.ingredientName;
     amountCell.innerText = newRow.amountOnHand;
 
+    // Append the delete button to the deleteCell
+    deleteCell.appendChild(deleteButton);
+
+
+    /*
     deleteCell = document.createElement("button");
-    deleteCell.innerHTML = "Delete";
-    deleteCell.onclick = function(){
+    deleteCell.innerHTML = `<button class="delete-button" onclick="deleteIngredient(${newRow.id})">Delete</button>`;
+    deleteCell.onclick = function () {
         deleteIngredient(newRow.id);
     }
+*/
+
 
     // Add the cells to the row 
     row.appendChild(idCell);
@@ -96,8 +110,7 @@ addRowToTable = (data) => {
     // then append option to drop down menu so newly created rows via ajax will be found in it without needing a refresh
     let selectMenu = document.getElementById("mySelect");
     let option = document.createElement("option");
-    option.text = newRow.name;
+    option.text = newRow.ingredientName;
     option.value = newRow.id;
     selectMenu.add(option);
-    // End of new step 8 code.
 }

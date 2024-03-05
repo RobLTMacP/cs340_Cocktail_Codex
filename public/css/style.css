@@ -23,17 +23,13 @@ body {
 
 table {
   border-collapse: collapse;
-  /*hmmm keep border-collapse?*/
   max-width: 1280px;
   padding: 3px;
-  border-color: var(--lightGold);
-  border-radius: 8px 8px 8px 8px;
-  border-style: hidden;
-  border: 0px transparent;
-  /*box-shadow: 0 0 0 1px var(--lightGold);*/
+  border: 7px solid var(--lightGold);
+  border-radius: 8px;
   display: inline-block;
   box-sizing: border-box;
-  background-color: var(--lightGold);
+  background-color: var(--black);
 }
 
 
@@ -41,7 +37,6 @@ th {
   border: 1px solid var(--lightGold);
   background-color: var(--darkerGrey);
   padding: 4px;
-  /*border-radius: 10px 10px 10px 10px;*/
   box-sizing: border-box;
 }
 
@@ -49,7 +44,6 @@ td {
   border: 1px solid var(--lightGold);
   background-color: var(--black);
   padding: 4px;
-  /*border-radius: 10px 10px 10px 10px;*/
   box-sizing: border-box;
 }
 
@@ -112,12 +106,7 @@ input {
   color: var(--black);
   border: 1px solid #ccc;
   border-radius: 5px;
-}
-
-select {
-  background-color: var(--lightGold);
-  color: var(--black);
-  border: 1px solid #ccc;
+  cursor: pointer;
 }
 
 button {
@@ -126,6 +115,16 @@ button {
   border: 1px solid #ccc;
   border-radius: 5px;
   font-weight: 700;
+  cursor: pointer;
+}
+
+.delete-button {
+  background-color: var(--dangerZone);
+  color: var(--lightGold);
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
 }
 
 select {
@@ -133,6 +132,7 @@ select {
   color: var(--black);
   border: 1px solid #ccc;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 /*THESE DON'T REALLY WORK*/
