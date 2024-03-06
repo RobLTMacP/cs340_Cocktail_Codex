@@ -33,41 +33,37 @@
   </tbody>
 </table>
 
-<div>
-  <div>
-    <h3>ADD TOOL:</h3>
-    <form>
-      <label>
-        Name:
-        <input type="text">
-      </label><br>
-      <input type="submit" value="Add Tool">
-    </form>
-  </div>
-  <div>
-    <h3>UPDATE TOOL: </h3>
-    <form>
-      <label>Select a Tool to Update:</label>
-      <label>
-        <select name="cocktails">
-          <option value="bar-spoon">Bar Spoon</option>
-          <option value="mixing-glass">Mixing Glass</option>
-          <option value="shaker-tin">Shaker Tin</option>
-          <option value="strainer">Hawthorne Strainer</option>
-          <option value="muddler">Muddler</option>
-        </select>
-      </label>
-      <br>
-      <label>
-        Name:
-        <input type="text">
-      </label><br>
-      <input type="submit" value="Update">
-      <input type="submit" value="Delete">
-    </form>
-  </div>
-</div>
+{{!-- Form to add a record to the table --}}
+<h3>Add Tool:</h3>
+<form id="add-tool-form-ajax">
+  <label for="input-name">Tool Name: </label>
+  <input type="text" name="input-name" id="input-name">
 
+  <br>
+  <br>
+  <input type="submit" class="submit-button" style="float: right;">
+</form>
+
+{{!-- Form to update a record to the table --}}
+<h3>Update Tool:</h3>
+<form id="update-tool-form-ajax">
+
+  <label for="input-name">Choose Tool: </label>
+  <select name="input-name" id="mySelect" onchange="populateFields(this.value)">
+    <option value="">Select Tool</option>
+    {{#each data}}
+    <option value="{{this.id}}">{{this.toolName}}</option>
+    {{/each}}
+  </select>
+
+  <label for="input-update-name"><br>Update Name: </label>
+  <input type="text" name="input-update-name" id="input-update-name">
+
+  <br>
+  <br>
+  <input type="submit" class="submit-button" style="float: right;">
+
+</form>
 
 {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
 <script src="./js/add_tool.js"></script>
