@@ -210,7 +210,12 @@ app.put('/put-category-ajax', function (req, res, next) {
 
 /*COCKTAIL INGREDIENTS*/
 app.get('/cocktailIngredients', function (req, res) {
-    res.render('cocktailIngredients');
+    let query1 = "SELECT * FROM Cocktail_has_Ingredients;";               // Define our query
+
+    db.pool.query(query1, function (error, rows, fields) {    // Execute the query
+
+        res.render('cocktailIngredients', { data: rows });                  // Render the index.hbs file, and also send the renderer
+    })                                                      // an object where 'data' is equal to the 'rows' we
 });
 
 /*COCKTAILS*/
@@ -220,7 +225,12 @@ app.get('/cocktails', function (req, res) {
 
 /*COCKTAIL TOOLS*/
 app.get('/cocktailTools', function (req, res) {
-    res.render('cocktailTools');
+    let query1 = "SELECT * FROM Cocktail_has_Tools;";               // Define our query
+
+    db.pool.query(query1, function (error, rows, fields) {    // Execute the query
+
+        res.render('cocktailTools', { data: rows });                  // Render the index.hbs file, and also send the renderer
+    })                                                      // an object where 'data' is equal to the 'rows' we
 });
 
 /*CUSTOMERS*/
@@ -230,12 +240,22 @@ app.get('/customers', function (req, res) {
 
 /*DRINK CATEGORIES CUSTOMERS*/
 app.get('/drinkCategoriesCustomers', function (req, res) {
-    res.render('drinkCategoriesCustomers');
+    let query1 = "SELECT * FROM DrinkCategories_has_Customers;";               // Define our query
+
+    db.pool.query(query1, function (error, rows, fields) {    // Execute the query
+
+        res.render('drinkCategoriesCustomers', { data: rows });                  // Render the index.hbs file, and also send the renderer
+    })                                                      // an object where 'data' is equal to the 'rows' we
 });
 
 /*TOOLS*/
 app.get('/tools', function (req, res) {
-    res.render('tools');
+    let query1 = "SELECT * FROM Tools;";               // Define our query
+
+    db.pool.query(query1, function (error, rows, fields) {    // Execute the query
+
+        res.render('tools', { data: rows });                  // Render the index.hbs file, and also send the renderer
+    })                                                      // an object where 'data' is equal to the 'rows' we
 });
 
 
