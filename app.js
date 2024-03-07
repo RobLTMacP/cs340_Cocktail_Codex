@@ -25,6 +25,58 @@ app.get('/', function (req, res) {
     res.render('index');                  // Render the index.hbs file, and also send the renderer
 });
 
+/*COCKTAILS*/
+app.get('/cocktails', function (req, res) {
+    let query1 = "SELECT * FROM Cocktails;";               // Define our query
+
+    db.pool.query(query1, function (error, rows, fields) {    // Execute the query
+
+        res.render('cocktails', { data: rows });                  // Render the index.hbs file, and also send the renderer
+    })                                                      // an object where 'data' is equal to the 'rows' we
+});
+
+/*CUSTOMERS*/
+app.get('/customers', function (req, res) {
+    let query1 = "SELECT * FROM Customers;";               // Define our query
+
+    db.pool.query(query1, function (error, rows, fields) {    // Execute the query
+
+        res.render('customers', { data: rows });                  // Render the index.hbs file, and also send the renderer
+    })                                                      // an object where 'data' is equal to the 'rows' we
+});
+
+app.post('/add-customers-ajax', function (req, res) {
+    // capture incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // capture null values
+
+    // create a query and run it on the DB   
+    query1 = "INSERT INTO Customers (firstName, lastName) VALUES (?, ?)";
+    db.pool.query(query1, [data.firstName, data.lastName], function (error, results) {
+
+        // error check
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        }
+        else {
+            query2 = `SELECT * FROM Customers;`;
+            db.pool.query(query2, function (error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                else {
+                    res.send(rows);
+                }
+            })
+        }
+    })
+})
+
+
+
 
 /*INGREDIENTS*/
 app.get('/ingredients', function (req, res) {

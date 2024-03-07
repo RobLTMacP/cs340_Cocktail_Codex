@@ -1,66 +1,41 @@
 <div>
-  <h2>The Cocktails</h2>
-  <br>
-  <table>
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Instructions</th>
-      <th>Amount Used (in ounces)</th>
-      <th>Ingredients</th>
-      <th>Glass</th>
-      <th>Category</th>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>Old Fashioned</td>
-      <td>Muddle sugar, bitters,
-        and cherry before
-        adding bourbon.
-        Garnish with orange
-        twist</td>
-      <td>2 <br> 1 <br> .1 <br> .25 <br></td>
-      <td>Bourbon <br> Cherry <br> Bitters <br> Sugar <br></td>
-      <td>Rocks</td>
-      <td>Old Fashioned</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>Rusty Nail</td>
-      <td>Stir Scotch and Drambuie. Garnish with Lemon Twist</td>
-      <td>2 <br> 1 <br> 1 <br></td>
-      <td>Scotch <br> Drambuie <br> Lemon Twist <br></td>
-      <td>Rocks</td>
-      <td>Old Fashioned</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>Negroni</td>
-      <td>Stir gin, sweet vermouth, campari</td>
-      <td>1 <br> 1 <br> 1 <br></td>
-      <td>Gin, Sweet Vermouth, Campari</td>
-      <td>Rocks</td>
-      <td>Old Fashioned</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>Brandy Alexander</td>
-      <td>Shake egg, cream, sugar, brandy</td>
-      <td>1 <br> 1 <br> .25 <br> 2 <br></td>
-      <td>Egg <br> Cream <br> Sugar <br> Brandy <br></td>
-      <td>Coupe</td>
-      <td>Flip</td>
-    </tr>
-    <tr>
-      <td>5</td>
-      <td>Tom Collins</td>
-      <td>Add gin, sugar, lemon juice to glass. Top with Soda.</td>
-      <td>2 <br> .5 <br> .75 <br> 4 <br> </td>
-      <td>Gin <br> Sugar <br> Lemon <br> Soda <br></td>
-      <td>Collins</td>
-      <td>Highball</td>
-    </tr>
-  </table>
+
+  {{!-- Create a table --}}
+<table id="cocktails-table">
+
+    {{!-- Header section --}}
+    <thead>
+
+        {{!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders --}}
+        <tr>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+            <th>Delete</th>
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{!-- For each row, print info in order --}}
+        {{#each data}}
+        <tr>
+            <td>{{this.id}}</td>
+            <td>{{this.name}}</td>
+            <td>{{this.instructions}}</td>
+            <td>{{this.glassUsed}}</td>
+            <td>{{this.cocktailToolID}}</td>
+            <td>{{this.cocktailIngredientsID}}</td>
+            <td>{{this.drinkCategoryID}}</td>
+            <td><button class="delete-button" onclick="deleteIngredient({{this.id}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
 
   <div>
     <div>
