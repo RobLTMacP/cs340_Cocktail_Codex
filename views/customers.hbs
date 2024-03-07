@@ -8,14 +8,14 @@
 
         {{!-- For just the first row, we print each key of the row object as a header cell so we
         know what each column means when the page renders --}}
-        <tr>
-            {{#each data.[0]}}
-            <th>
-                {{@key}}
-            </th>
-            {{/each}}
-            <th>delete</th>
-        </tr>
+         <tr>
+             {{#each data.[0]}}
+             <th>
+                 {{@key}}
+             </th>
+             {{/each}}
+             <th>delete</th>
+         </tr>
     </thead>
 
     {{!-- Body section --}}
@@ -43,6 +43,14 @@
     <br>
     <label for="input-lastName">Customer last name: </label>
     <input type="text" name="input-lname" id="input-lname">
+    <br>
+    <label for="input-category">Preferred Cocktail Category: </label>
+    <select name="input-category" id="mySelect">
+        <option value="">Select an existing category:</option>
+        {{#each categories}}
+        <option value="{{this.id}}">{{this.category}}</option>
+        {{/each}}
+    </select>
 
     <br>
     <br>
@@ -54,7 +62,7 @@
 <form id="update-customer-form-ajax">
 
     <label for="input-name">Choose Customer: </label>
-    <select name="input-name" id="mySelect" onchange="populateFields(this.value)">
+    <select name="input-name" id="select-customer" onchange="populateFields(this.value)">
         <option value="">Select a Customer</option>
         {{#each data}}
         <option value="{{this.id}}">{{this.firstName}} {{this.lastName}}</option>
@@ -67,6 +75,14 @@
 
     <label for="input-update-lastName">Update Last Name: </label>
     <input type="text" name="input-update-lastName" id="input-update-lastName">
+    <br>
+    <label for="input-name">Update Preferred Category: </label>
+    <select name="input-category" id="select-category">
+        <option value="">Select an existing category:</option>
+        {{#each categories}}
+        <option value="{{this.id}}">{{this.category}}</option>
+        {{/each}}
+    </select>
 
     <br>
     <br>

@@ -1,28 +1,32 @@
-let updateCategoryForm = document.getElementById('update-customer-form-ajax');
+let updateCustomerForm = document.getElementById('update-customer-form-ajax');
 
 // modify the objects we need
-updateCategoryForm.addEventListener("submit", function (e) {
+updateCustomerForm.addEventListener("submit", function (e) {
 
     //prevent form from submitting
     e.preventDefault();
 
     // Get form fields we need to get data from
-    let inputID = document.getElementById("mySelect");
+    let inputID = document.getElementById("select-customer");
     let inputFirstName = document.getElementById("input-update-firstName");
     let inputLastName = document.getElementById("input-update-lastName");
+    let category = document.getElementById("select-category");
 
     // get the values from form fields
     let IDValue = inputID.value;
     let firstNameValue = inputFirstName.value;
-    console.log(IDValue);
     let lastNameValue = inputLastName.value;
+    let categoryValue = category.value;
 
     // put data we want to send in a js object
     let data = {
         id: IDValue,
         firstName: firstNameValue,
-        lastName: lastNameValue
+        lastName: lastNameValue,
+        newPreferredCategory: categoryValue
     }
+
+    console.log(data);
 
     // setup ajax req
     var xhttp = new XMLHttpRequest();

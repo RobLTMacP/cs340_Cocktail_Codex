@@ -27,7 +27,22 @@ app.get('/', function (req, res) {
 
 /*COCKTAILS*/
 app.get('/cocktails', function (req, res) {
-    let query1 = "SELECT * FROM Cocktails;";               // Define our query
+    let query1 = `SELECT 
+    Cocktails.*, 
+    GROUP_CONCAT(DISTINCT CONCAT(Ingredients.ingredientName, ': ', Cocktail_has_Ingredients.amountUsed) ORDER BY Cocktail_has_Ingredients.cocktailIngredientsID SEPARATOR ', ') AS Ingredients_Amounts,
+    GROUP_CONCAT(DISTINCT Tools.toolName ORDER BY Cocktail_has_Tools.cocktailToolID SEPARATOR ', ') AS Tools_Used
+FROM 
+    Cocktails
+LEFT JOIN 
+    Cocktail_has_Ingredients ON Cocktails.id = Cocktail_has_Ingredients.cocktailID
+LEFT JOIN 
+    Ingredients ON Cocktail_has_Ingredients.ingredientID = Ingredients.id
+LEFT JOIN 
+    Cocktail_has_Tools ON Cocktails.id = Cocktail_has_Tools.cocktailID
+LEFT JOIN 
+    Tools ON Cocktail_has_Tools.toolID = Tools.id
+GROUP BY 
+    Cocktails.id;`;               // Define our query
 
     db.pool.query(query1, function (error, rows, fields) {    // Execute the query
 
@@ -38,11 +53,28 @@ app.get('/cocktails', function (req, res) {
 /*CUSTOMERS*/
 app.get('/customers', function (req, res) {
     let query1 = "SELECT Customers.*, DrinkCategories.category AS cocktailCategory FROM Customers LEFT JOIN DrinkCategories_has_Customers ON Customers.id = DrinkCategories_has_Customers.customerID LEFT JOIN DrinkCategories ON DrinkCategories_has_Customers.drinkCategoryID = DrinkCategories.id";               // Define our query
+    let query2 = `SELECT * FROM DrinkCategories;`;
+     
 
-    db.pool.query(query1, function (error, rows, fields) {    // Execute the query
+    db.pool.query(query1, function (error, rows, fields) {  // execute 1st query
 
-        res.render('customers', { data: rows });                  // Render the index.hbs file, and also send the renderer
-    })                                                      // an object where 'data' is equal to the 'rows' we
+        let customer = rows;
+
+        // run second query
+        db.pool.query(query2, (error, rows, fields) => {
+
+            // save the categories
+            let cat_data = rows;
+            if (error){
+                console.log(error);
+            }
+            else{
+                return res.render('customers', {data: customer, categories: cat_data});
+            }
+        })
+
+        // res.render('customers', { data: rows });                  // Render the index.hbs file, and also send the renderer an object where 'data' is equal to the 'rows' we
+    })                                                      
 });
 
 // Add Customer
@@ -98,12 +130,14 @@ app.delete('/delete-customer-ajax', function (req, res, next) {
 app.put('/put-customer-ajax', function (req, res, next) {
 
     let data = req.body;
-    console.log(req.body);
+    console.log("Put request updating: ", req.body);
     let customerID = parseInt(data.id);
+    let categoryID = parseInt(data.newPreferredCategory);
 
 
     queryUpdateCustomer = `UPDATE Customers SET firstName = ?, lastName = ? WHERE id = ?`;
     selectCustomer = `SELECT * from Customers WHERE id = ?`
+    queryUpdateCustomerCategory = `UPDATE DrinkCategories_has_Customers SET drinkCategoryID = ?, WHERE customerID = ?`;
 
     db.pool.query(queryUpdateCustomer, [data.firstName, data.lastName, customerID], function (error, rows, fields) {
         if (error) {
@@ -117,7 +151,18 @@ app.put('/put-customer-ajax', function (req, res, next) {
                     res.sendStatus(400);
                 }
                 else {
-                    res.send(rows);
+                    let customer = rows;
+                    db.pool.query(queryUpdateCustomerCategory, [categoryID, customerID], function (error, rows, fields) {
+                        if (error) {
+                            console.log(error);
+                            res.sendStatus(400);
+                        }
+                        else {
+                            let res = rows
+                            console.log(customer, res);
+                            res.send(customer, res);
+                        }
+                    })
                 }
             })
         }
