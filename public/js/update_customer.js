@@ -52,7 +52,19 @@ updateCustomerForm.addEventListener("submit", function (e) {
 
 function updateRow(data, ID) {
     let parsedData = JSON.parse(data);
-    console.log(parsedData);
+    let count = parsedData.length;
+    let dataNeeded;
+    console.log("Count is:", count);
+    
+    // we need to find the parsed data obj that refers to who is getting updated 
+    for (let i = 0; i < count; i++){
+        console.log(parsedData[i].id);
+        if (parsedData[i].id == ID){
+            dataNeeded = parsedData[i];
+        }
+    }
+
+    console.log("Parsed data (updateRow): ", parsedData);
 
     let table = document.getElementById("customers-table");
 
@@ -67,15 +79,17 @@ function updateRow(data, ID) {
             // Get td of description value
             let td1 = updateRowIndex.getElementsByTagName("td")[1];
             let td2 = updateRowIndex.getElementsByTagName("td")[2];
+            let td3 = updateRowIndex.getElementsByTagName("td")[3];
 
             // Reassign description to our value we updated to
-            td1.innerHTML = parsedData[0].firstName;
-            td2.innerHTML = parsedData[0].lastName;
+            td1.innerHTML = dataNeeded.firstName;
+            td2.innerHTML = dataNeeded.lastName;
+            td3.innerHTML = dataNeeded.cocktailCategory;
 
             // Update dropdown menu
-            selectMenu = document.getElementById("mySelect");
-            selectMenu.options[i].text = parsedData[0].firstName;
-        }
+            // selectMenu = document.getElementById("mySelect");
+            // selectMenu.options[i].text = parsedData[0].firstName;
+        } 
     }
 }
 

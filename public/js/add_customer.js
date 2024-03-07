@@ -10,15 +10,18 @@ addCustomerForm.addEventListener("submit", function (e) {
     // Get form fields we need to get data from
     let inputFName = document.getElementById("input-fname");
     let inputLName = document.getElementById("input-lname");
+    let preferredCategory = document.getElementById("select-category");
 
     // Get the values from the form fields
     let firstNameValue = inputFName.value;
     let lastNameValue = inputLName.value;
+    let preferredCategoryValue = preferredCategory.value;
 
     // Put our data we want to send in a javascript object
     let data = {
         firstName: firstNameValue,
         lastName: lastNameValue,
+        preferredCategory: preferredCategoryValue
     }
 
     // Setup our AJAX request
@@ -36,6 +39,7 @@ addCustomerForm.addEventListener("submit", function (e) {
             // Clear the input fields for another transaction
             inputFName.value = '';
             inputLName.value = '';
+            preferredCategory.value = '';
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {
             console.log("There was an error with the input.")

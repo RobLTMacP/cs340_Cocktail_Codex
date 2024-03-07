@@ -81,11 +81,14 @@ app.get('/customers', function (req, res) {
 app.post('/add-customers-ajax', function (req, res) {
     // capture incoming data and parse it back to a JS object
     let data = req.body;
+    console.log("Data is: ", data);
 
     // capture null values
 
     // create a query and run it on the DB   
     query1 = "INSERT INTO Customers (firstName, lastName) VALUES (?, ?)";
+    query2 = `INSERT INTO DrinkCategories_has_Customers (customerID, drinkCategoryID) VALUES ( ?, ?);`;
+    query3 = `SELECT * FROM Customers;`; 
     db.pool.query(query1, [data.firstName, data.lastName], function (error, results) {
 
         // error check
@@ -93,19 +96,15 @@ app.post('/add-customers-ajax', function (req, res) {
             console.log(error);
             res.sendStatus(400);
         }
-        else {
-            query2 = `SELECT * FROM Customers;`;
-            db.pool.query(query2, function (error, rows, fields) {
-                if (error) {
-                    console.log(error);
-                    res.sendStatus(400);
-                }
-                else {
-                    res.send(rows);
-                }
-            })
+        else { 
+            // let newID = results.insertID;
+            console.log(results);
         }
     })
+
+    // we need to get the new customer ID before we can add to the intersection table
+    
+
 })
 
 // Delete Customer
@@ -136,37 +135,38 @@ app.put('/put-customer-ajax', function (req, res, next) {
 
 
     queryUpdateCustomer = `UPDATE Customers SET firstName = ?, lastName = ? WHERE id = ?`;
-    selectCustomer = `SELECT * from Customers WHERE id = ?`
     queryUpdateCustomerCategory = `UPDATE DrinkCategories_has_Customers SET drinkCategoryID = ? WHERE customerID = ?`;
+    selectCustomer = `SELECT Customers.*, DrinkCategories.category AS cocktailCategory FROM Customers LEFT JOIN DrinkCategories_has_Customers ON Customers.id = DrinkCategories_has_Customers.customerID LEFT JOIN DrinkCategories ON DrinkCategories_has_Customers.drinkCategoryID = DrinkCategories.id;`;
 
     db.pool.query(queryUpdateCustomer, [data.firstName, data.lastName, customerID], function (error, rows, fields) {
         if (error) {
-            console.log(error)
+            console.log(error);
             res.sendStatus(400);
         }
         else {
-            db.pool.query(selectCustomer, [customerID], function (error, rows, fields) {
-                if (error) {
+            db.pool.query(queryUpdateCustomerCategory, [categoryID, customerID], function (error, rows, fields) {
+                if (error){
                     console.log(error);
                     res.sendStatus(400);
                 }
-                else {
-                    let customer = rows;
-                    db.pool.query(queryUpdateCustomerCategory, [categoryID, customerID], function (error, rows, fields) {
+                else{
+                    db.pool.query(selectCustomer, [customerID], function (error, rows, fields) {
                         if (error) {
                             console.log(error);
                             res.sendStatus(400);
                         }
                         else {
-                            // FIX THIS EVERYTHING ELSE WORKS UP TO HERE
-                            // res.send(customer, res);
+                            console.log("We made it this far");
+                            console.log(rows);
+                            res.send(rows);
                         }
                     })
                 }
             })
         }
     })
-})
+});
+    
 
 /*INGREDIENTS*/
 app.get('/ingredients', function (req, res) {
