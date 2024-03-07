@@ -23,10 +23,11 @@
 
         {{!-- For each row, print info in order --}}
         {{#each data}}
-        <tr>
+        <tr data-value={{this.id}}>
             <td>{{this.id}}</td>
             <td>{{this.firstName}}</td>
             <td>{{this.lastName}}</td>
+            <td>{{this.cocktailCategory}}</td>
             <td><button class="delete-button" onclick="deleteCustomer({{this.id}})">Delete</button></td>
         </tr>
         {{/each}}
@@ -35,13 +36,12 @@
 
 {{!-- Form to add a record to the table --}}
 <h3>Add Customer:</h3>
-<p>To add a new customer, please enter the information below and click 'Submit'!</p>
 <form id="add-customer-form-ajax">
-    <label for="input-name">Customer First Name: </label>
+    <label for="input-firstName">Customer First Name: </label>
     <input type="text" name="input-fname" id="input-fname">
 
     <br>
-    <label for="input-amount">Customer last name: </label>
+    <label for="input-lastName">Customer last name: </label>
     <input type="text" name="input-lname" id="input-lname">
 
     <br>
@@ -49,9 +49,7 @@
     <input type="submit" class="submit-button" style="float: right;">
 </form>
 
-  <h3>UPDATE CUSTOMER:</h3>
-
-  {{!-- Form to update a record to the table --}}
+{{!-- Form to update a record to the table --}}
 <h3>Update Customer:</h3>
 <form id="update-customer-form-ajax">
 
@@ -59,16 +57,16 @@
     <select name="input-name" id="mySelect" onchange="populateFields(this.value)">
         <option value="">Select a Customer</option>
         {{#each data}}
-        <option value="{{this.id}}">{{this.id}}</option>
+        <option value="{{this.id}}">{{this.firstName}} {{this.lastName}}</option>
         {{/each}}
     </select>
 
-    <label for="input-update-fname"><br>Update First Name: </label>
-    <input type="text" name="input-update-fname" id="input-update-fname">
+    <label for="input-update-firstName"><br>Update First Name: </label>
+    <input type="text" name="input-update-firstName" id="input-update-firstName">
     <br>
 
-    <label for="input-amount">Update Last Name: </label>
-    <input type="text" name="input-update-lname" id="input-update-lname">
+    <label for="input-update-lastName">Update Last Name: </label>
+    <input type="text" name="input-update-lastName" id="input-update-lastName">
 
     <br>
     <br>

@@ -37,7 +37,7 @@ app.get('/cocktails', function (req, res) {
 
 /*CUSTOMERS*/
 app.get('/customers', function (req, res) {
-    let query1 = "SELECT * FROM Customers;";               // Define our query
+    let query1 = "SELECT Customers.*, DrinkCategories.category AS cocktailCategory FROM Customers LEFT JOIN DrinkCategories_has_Customers ON Customers.id = DrinkCategories_has_Customers.customerID LEFT JOIN DrinkCategories ON DrinkCategories_has_Customers.drinkCategoryID = DrinkCategories.id";               // Define our query
 
     db.pool.query(query1, function (error, rows, fields) {    // Execute the query
 
@@ -80,7 +80,7 @@ app.post('/add-customers-ajax', function (req, res) {
 app.delete('/delete-customer-ajax', function (req, res, next) {
     let data = req.body;
     let customerID = parseInt(data.id);
-    let deleteCustomer = `DELETE FROM Customers WHERE id = ?`; 
+    let deleteCustomer = `DELETE FROM Customers WHERE id = ?`;
 
     db.pool.query(deleteCustomer, [customerID], function (error, rows, fields) {
         if (error) {
@@ -93,6 +93,36 @@ app.delete('/delete-customer-ajax', function (req, res, next) {
     })
 })
 
+
+// update customer
+app.put('/put-customer-ajax', function (req, res, next) {
+
+    let data = req.body;
+    console.log(req.body);
+    let customerID = parseInt(data.id);
+
+
+    queryUpdateCustomer = `UPDATE Customers SET firstName = ?, lastName = ? WHERE id = ?`;
+    selectCustomer = `SELECT * from Customers WHERE id = ?`
+
+    db.pool.query(queryUpdateCustomer, [data.firstName, data.lastName, customerID], function (error, rows, fields) {
+        if (error) {
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else {
+            db.pool.query(selectCustomer, [customerID], function (error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                else {
+                    res.send(rows);
+                }
+            })
+        }
+    })
+})
 
 /*INGREDIENTS*/
 app.get('/ingredients', function (req, res) {

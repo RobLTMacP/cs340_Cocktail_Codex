@@ -68,7 +68,7 @@ addRowToTable = (data) => {
     let idCell = document.createElement("TD");
     let firstNameCell = document.createElement("TD");
     let lastNameCell = document.createElement("TD");
-
+    let cocktailCategoryCell = document.createElement("TD");
     let deleteCell = document.createElement("TD");
 
     let deleteButton = document.createElement("button");
@@ -82,6 +82,7 @@ addRowToTable = (data) => {
     idCell.innerText = newRow.id;
     firstNameCell.innerText = newRow.firstName;
     lastNameCell.innerText = newRow.lastName;
+    cocktailCategoryCell.innerText = newRow.cocktailCategory;
 
     console.log("ID Cell:", idCell.innerText);
     console.log("First Name Cell:", firstNameCell.innerText);
@@ -94,6 +95,7 @@ addRowToTable = (data) => {
     row.appendChild(idCell);
     row.appendChild(firstNameCell);
     row.appendChild(lastNameCell);
+    row.appendChild(cocktailCategoryCell);
     row.appendChild(deleteCell)
 
     row.setAttribute('data-value', newRow.id);
@@ -103,9 +105,9 @@ addRowToTable = (data) => {
 
     // Find drop down menu, create a new option, fill data in the option,
     // then append option to drop down menu so newly created rows via ajax will be found in it without needing a refresh
-    // let selectMenu = document.getElementById("mySelect");
-    // let option = document.createElement("option");
-    // option.text = newRow.category;
-    // option.value = newRow.id;
-    // selectMenu.add(option);
+    let selectMenu = document.getElementById("mySelect");
+    let option = document.createElement("option");
+    option.text = newRow.firstName + ' ' + newRow.lastName;
+    option.value = newRow.id;
+    selectMenu.add(option);
 }
