@@ -137,7 +137,7 @@ app.put('/put-customer-ajax', function (req, res, next) {
 
     queryUpdateCustomer = `UPDATE Customers SET firstName = ?, lastName = ? WHERE id = ?`;
     selectCustomer = `SELECT * from Customers WHERE id = ?`
-    queryUpdateCustomerCategory = `UPDATE DrinkCategories_has_Customers SET drinkCategoryID = ?, WHERE customerID = ?`;
+    queryUpdateCustomerCategory = `UPDATE DrinkCategories_has_Customers SET drinkCategoryID = ? WHERE customerID = ?`;
 
     db.pool.query(queryUpdateCustomer, [data.firstName, data.lastName, customerID], function (error, rows, fields) {
         if (error) {
@@ -158,9 +158,8 @@ app.put('/put-customer-ajax', function (req, res, next) {
                             res.sendStatus(400);
                         }
                         else {
-                            let res = rows
-                            console.log(customer, res);
-                            res.send(customer, res);
+                            // FIX THIS EVERYTHING ELSE WORKS UP TO HERE
+                            // res.send(customer, res);
                         }
                     })
                 }
