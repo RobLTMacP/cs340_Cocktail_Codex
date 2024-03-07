@@ -1,25 +1,38 @@
-<div>
-  <h2>Categories + Customers Intersection Table</h2>
-  <br>
-  <table>
+<h2>Categories + Customers Intersection Table</h2>
+<br>
+
+{{!-- Create a table --}}
+<table id="drinkCategoriesCustomers-table">
+
+  {{!-- Header section --}}
+  <thead>
+
+    {{!-- For just the first row, we print each key of the row object as a header cell so we
+    know what each column means when the page renders --}}
     <tr>
-      <th>Customer ID</th>
-      <th>Drink Category ID</th>
+      {{#each data.[0]}}
+      <th>
+        {{@key}}
+      </th>
+      {{/each}}
+      <th>delete</th>
     </tr>
-    <tr>
-      <td>1</td>
-      <td>4</td>
+  </thead>
+
+  {{!-- Body section --}}
+  <tbody>
+
+    {{!-- For each row, print info in order --}}
+    {{#each data}}
+    <tr data-value={{this.drinkCategoriesCustomersID}}>
+      <td>{{this.drinkCategoriesCustomersID}}</td>
+      <td>{{this.drinkCategoryID}}</td>
+      <td>{{this.customerID}}</td>
+      <td><button class="delete-button" onclick="deleteTool({{this.drinkCategoriesCustomersID}})">Delete</button></td>
     </tr>
-    <tr>
-      <td>2</td>
-      <td>3</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>6</td>
-    </tr>
-  </table>
-</div>
+    {{/each}}
+  </tbody>
+</table>
 
 <h3>ADD RELATIONSHIP:</h3>
 

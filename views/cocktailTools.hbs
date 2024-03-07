@@ -1,29 +1,38 @@
-<div>
-  <h2>Cocktails + Tools Intersection Table</h2>
-  <br>
-  <table>
+<h2>Cocktails + Tools Intersection Table</h2>
+<br>
+
+{{!-- Create a table --}}
+<table id="cocktailTools-table">
+
+  {{!-- Header section --}}
+  <thead>
+
+    {{!-- For just the first row, we print each key of the row object as a header cell so we
+    know what each column means when the page renders --}}
     <tr>
-      <th>Cocktail Tool ID</th>
-      <th>Tool ID</th>
-      <th>Cocktail ID</th>
+      {{#each data.[0]}}
+      <th>
+        {{@key}}
+      </th>
+      {{/each}}
+      <th>delete</th>
     </tr>
-    <tr>
-      <td>1</td>
-      <td>1</td>
-      <td>3</td>
+  </thead>
+
+  {{!-- Body section --}}
+  <tbody>
+
+    {{!-- For each row, print info in order --}}
+    {{#each data}}
+    <tr data-value={{this.cocktailToolID}}>
+      <td>{{this.cocktailToolID}}</td>
+      <td>{{this.cocktailID}}</td>
+      <td>{{this.toolID}}</td>
+      <td><button class="delete-button" onclick="deleteTool({{this.cocktailToolID}})">Delete</button></td>
     </tr>
-    <tr>
-      <td>2</td>
-      <td>2</td>
-      <td>3</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>3</td>
-      <td>3</td>
-    </tr>
-  </table>
-</div>
+    {{/each}}
+  </tbody>
+</table>
 
 <h3>ADD RELATIONSHIP:</h3>
 

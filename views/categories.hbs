@@ -62,22 +62,21 @@
     {{/each}}
   </select>
 
-  <form id="add-category-form-ajax">
-    <label for="input-update-name"><br>Update Name: </label>
-    <input type="text" name="input-update-name" id="input-update-name">
+  <label for="input-update-name"><br>Update Name: </label>
+  <input type="text" name="input-update-name" id="input-update-name">
 
-    <label for="input-description">
-      <br>
-      Update Description: </label><br>
-    <textarea class="large" name="input-description" rows="4" cols="50" id="input-update-description"></textarea>
-
+  <label for="input-description">
     <br>
-    <br>
-    <input type="submit" class="submit-button" style="float: right;">
+    Update Description: </label><br>
+  <textarea class="large" name="input-description" rows="4" cols="50" id="input-update-description"></textarea>
 
-  </form>
+  <br>
+  <br>
+  <input type="submit" class="submit-button" style="float: right;">
 
-  {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
-  <script src="./js/add_category.js"></script>
-  <script src="./js/delete_category.js"></script>
-  <script src="./js/update_category.js"></script>
+</form>
+
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/add_category.js"></script>
+<script src="./js/delete_category.js"></script>
+<script src="./js/update_category.js"></script>

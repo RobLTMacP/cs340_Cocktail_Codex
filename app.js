@@ -262,7 +262,12 @@ app.put('/put-category-ajax', function (req, res, next) {
 
 /*COCKTAIL INGREDIENTS*/
 app.get('/cocktailIngredients', function (req, res) {
-    res.render('cocktailIngredients');
+    let query1 = "SELECT * FROM Cocktail_has_Ingredients;";               // Define our query
+
+    db.pool.query(query1, function (error, rows, fields) {    // Execute the query
+
+        res.render('cocktailIngredients', { data: rows });                  // Render the index.hbs file, and also send the renderer
+    })                                                      // an object where 'data' is equal to the 'rows' we
 });
 
 /*COCKTAILS*/
@@ -272,7 +277,12 @@ app.get('/cocktails', function (req, res) {
 
 /*COCKTAIL TOOLS*/
 app.get('/cocktailTools', function (req, res) {
-    res.render('cocktailTools');
+    let query1 = "SELECT * FROM Cocktail_has_Tools;";               // Define our query
+
+    db.pool.query(query1, function (error, rows, fields) {    // Execute the query
+
+        res.render('cocktailTools', { data: rows });                  // Render the index.hbs file, and also send the renderer
+    })                                                      // an object where 'data' is equal to the 'rows' we
 });
 
 /*CUSTOMERS*/
@@ -282,13 +292,99 @@ app.get('/customers', function (req, res) {
 
 /*DRINK CATEGORIES CUSTOMERS*/
 app.get('/drinkCategoriesCustomers', function (req, res) {
-    res.render('drinkCategoriesCustomers');
+    let query1 = "SELECT * FROM DrinkCategories_has_Customers;";               // Define our query
+
+    db.pool.query(query1, function (error, rows, fields) {    // Execute the query
+
+        res.render('drinkCategoriesCustomers', { data: rows });                  // Render the index.hbs file, and also send the renderer
+    })                                                      // an object where 'data' is equal to the 'rows' we
 });
 
 /*TOOLS*/
 app.get('/tools', function (req, res) {
-    res.render('tools');
+    let query1 = "SELECT * FROM Tools;";               // Define our query
+
+    db.pool.query(query1, function (error, rows, fields) {    // Execute the query
+
+        res.render('tools', { data: rows });                  // Render the index.hbs file, and also send the renderer
+    })                                                      // an object where 'data' is equal to the 'rows' we
 });
+
+
+app.post('/add-tool-ajax', function (req, res) {
+    // capture incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // create a query and run it on the DB   
+    query1 = "INSERT INTO Tools (toolName) VALUES (?)";
+    db.pool.query(query1, [data.toolName], function (error, results) {
+
+        // error check
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        }
+        else {
+            query2 = `SELECT * FROM Tools;`;
+            db.pool.query(query2, function (error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                else {
+                    res.send(rows);
+                }
+            })
+        }
+    })
+})
+
+// delete tool
+app.delete('/delete-tool-ajax', function (req, res, next) {
+    let data = req.body;
+    let toolID = parseInt(data.id);
+    let deleteTool = `DELETE FROM Tools WHERE id = ?`;
+
+    db.pool.query(deleteTool, [toolID], function (error, rows, fields) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        }
+        else {
+            res.sendStatus(204);
+        }
+    })
+})
+
+// update tool
+app.put('/put-tool-ajax', function (req, res, next) {
+
+    let data = req.body;
+    console.log(req.body);
+    let toolID = parseInt(data.id);
+
+
+    queryUpdateTool = `UPDATE Tools SET toolName = ? WHERE id = ?`;
+    selectTool = `SELECT * from Tools WHERE id = ?`
+
+    db.pool.query(queryUpdateTool, [data.toolName, toolID], function (error, rows, fields) {
+        if (error) {
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else {
+            db.pool.query(selectTool, [toolID], function (error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                else {
+                    res.send(rows);
+                }
+            })
+        }
+    })
+})
 
 
 
