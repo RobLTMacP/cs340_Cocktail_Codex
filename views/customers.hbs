@@ -27,7 +27,7 @@
             <td>{{this.id}}</td>
             <td>{{this.firstName}}</td>
             <td>{{this.lastName}}</td>
-            <td><button class="delete-button" onclick="deleteIngredient({{this.id}})">Delete</button></td>
+            <td><button class="delete-button" onclick="deleteCustomer({{this.id}})">Delete</button></td>
         </tr>
         {{/each}}
     </tbody>
@@ -51,39 +51,32 @@
 
   <h3>UPDATE CUSTOMER:</h3>
 
-  <form>
-    <label>Select a customer ID to Modify:</label>
-    <label>
-      <select name="customers">
-        <option value="robert">Robert MacPherson</option>
-        <option value="alex">Alex Blumenstock</option>
-        <option value="anna">Anna Kendrick</option>
-        <option value="kendrick-lamar">Kendrick Lamar</option>
-        <option value="mahomes">Patrick Mahomes</option>
-      </select>
-    </label>
+  {{!-- Form to update a record to the table --}}
+<h3>Update Customer:</h3>
+<form id="update-customer-form-ajax">
+
+    <label for="input-name">Choose Customer: </label>
+    <select name="input-name" id="mySelect" onchange="populateFields(this.value)">
+        <option value="">Select a Customer</option>
+        {{#each data}}
+        <option value="{{this.id}}">{{this.id}}</option>
+        {{/each}}
+    </select>
+
+    <label for="input-update-fname"><br>Update First Name: </label>
+    <input type="text" name="input-update-fname" id="input-update-fname">
     <br>
-    <label>
-      First Name:
-      <input type="text">
-    </label><br>
-    <label>
-      Last Name:
-      <input type="text">
-    </label><br>
-    <label>
-      Drink Category (By ID#):
-      <input type="radio" name="drink_category" value="1"> 1: Old Fashioned
-      <input type="radio" name="drink_category" value="2"> 2: Daiquiri
-      <input type="radio" name="drink_category" value="3"> 3: Martini
-      <input type="radio" name="drink_category" value="4"> 4: Highball
-      <input type="radio" name="drink_category" value="5"> 5: Flip
-      <input type="radio" name="drink_category" value="6"> 6: Sidecar
-    </label><br>
-    <input type="submit" value="Update">
-    <input type="submit" value="Delete">
-  </form>
-</div>
+
+    <label for="input-amount">Update Last Name: </label>
+    <input type="text" name="input-update-lname" id="input-update-lname">
+
+    <br>
+    <br>
+    <input type="submit" class="submit-button" style="float: right;">
+
+</form>
 
 {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
 <script src="./js/add_customer.js"></script>
+<script src="./js/delete_customer.js"></script>
+<script src="./js/update_customer.js"></script>

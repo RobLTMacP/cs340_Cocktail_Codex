@@ -45,6 +45,7 @@ app.get('/customers', function (req, res) {
     })                                                      // an object where 'data' is equal to the 'rows' we
 });
 
+// Add Customer
 app.post('/add-customers-ajax', function (req, res) {
     // capture incoming data and parse it back to a JS object
     let data = req.body;
@@ -75,7 +76,22 @@ app.post('/add-customers-ajax', function (req, res) {
     })
 })
 
+// Delete Customer
+app.delete('/delete-customer-ajax', function (req, res, next) {
+    let data = req.body;
+    let customerID = parseInt(data.id);
+    let deleteCustomer = `DELETE FROM Customers WHERE id = ?`; 
 
+    db.pool.query(deleteCustomer, [customerID], function (error, rows, fields) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        }
+        else {
+            res.sendStatus(204);
+        }
+    })
+})
 
 
 /*INGREDIENTS*/
