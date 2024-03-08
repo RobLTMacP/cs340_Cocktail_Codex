@@ -88,8 +88,8 @@ function updateRow(data, ID) {
             td3.innerHTML = dataNeeded.cocktailCategory;
 
             // Update dropdown menu
-            // selectMenu = document.getElementById("mySelect");
-            // selectMenu.options[i].text = parsedData[0].firstName;
+            //selectMenu = document.getElementById("select-update-category");
+            //selectMenu.options[i].text = parsedData[0].firstName + parsedData[0].lastName;
         } 
     }
 }

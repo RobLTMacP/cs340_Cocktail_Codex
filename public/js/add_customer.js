@@ -86,11 +86,18 @@ addRowToTable = (data) => {
     idCell.innerText = newRow.id;
     firstNameCell.innerText = newRow.firstName;
     lastNameCell.innerText = newRow.lastName;
-    cocktailCategoryCell.innerText = newRow.cocktailCategory;
+    if(!newRow.preferredCategory){
+        cocktailCategoryCell.innerText = '';
+    }
+    else {
+        cocktailCategoryCell.innerText = newRow.preferredCategory;
+    }
+    
 
     console.log("ID Cell:", idCell.innerText);
     console.log("First Name Cell:", firstNameCell.innerText);
     console.log("last Name Cell:", lastNameCell.innerText);
+    console.log("Category cell: ", cocktailCategoryCell.innerText);
 
     // Append the delete button to the deleteCell
     deleteCell.appendChild(deleteButton);
@@ -109,7 +116,7 @@ addRowToTable = (data) => {
 
     // Find drop down menu, create a new option, fill data in the option,
     // then append option to drop down menu so newly created rows via ajax will be found in it without needing a refresh
-    let selectMenu = document.getElementById("mySelect");
+    let selectMenu = document.getElementById("select-customer");
     let option = document.createElement("option");
     option.text = newRow.firstName + ' ' + newRow.lastName;
     option.value = newRow.id;

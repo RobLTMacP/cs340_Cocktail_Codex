@@ -38,7 +38,7 @@ function deleteRow(customerID) {
     }
 
     // update dropdown menu
-    let selectMenu = document.getElementById("mySelect");
+    let selectMenu = document.getElementById("select-customer");
     for (let i = 0; i < selectMenu.options.length; i++) {
         if (selectMenu.options[i].value == customerID) {
             selectMenu.remove(i);

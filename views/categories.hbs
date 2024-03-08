@@ -54,7 +54,7 @@
 <form id="update-category-form-ajax">
 
   <label for="input-name">Choose Category: </label>
-  <select name="input-name" id="mySelect" onchange="populateFields(this.value)">
+  <select name="input-name" id="category-select" onchange="populateFields(this.value)">
     <option value="">Select Category</option>
     {{#each data}}
     <option value="{{this.id}}">{{this.category}}</option>

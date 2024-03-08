@@ -131,7 +131,7 @@ app.post('/add-customers-ajax', function (req, res) {
 app.delete('/delete-customer-ajax', function (req, res, next) {
     let data = req.body;
     let customerID = parseInt(data.id);
-    let deleteCustomer = `DELETE FROM Customers WHERE id = ?`;
+    let deleteCustomer = `DELETE FROM Customers WHERE id = ?;`;
 
     db.pool.query(deleteCustomer, [customerID], function (error, rows, fields) {
         if (error) {

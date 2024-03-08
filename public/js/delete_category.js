@@ -37,8 +37,8 @@ function deleteRow(categoryID) {
         }
     }
 
-    // update dropdown menu
-    let selectMenu = document.getElementById("mySelect");
+    // update dropdown menu on categories page
+    let selectMenu = document.getElementById("category-select");
     for (let i = 0; i < selectMenu.options.length; i++) {
         if (selectMenu.options[i].value == categoryID) {
             selectMenu.remove(i);
