@@ -10,13 +10,14 @@ updateCustomerForm.addEventListener("submit", function (e) {
     let inputID = document.getElementById("select-customer");
     let inputFirstName = document.getElementById("input-update-firstName");
     let inputLastName = document.getElementById("input-update-lastName");
-    let category = document.getElementById("select-category");
+    let category = document.getElementById("select-update-category");
 
     // get the values from form fields
     let IDValue = inputID.value;
     let firstNameValue = inputFirstName.value;
     let lastNameValue = inputLastName.value;
     let categoryValue = category.value;
+    console.log("Category ID to update:", categoryValue);
 
     // put data we want to send in a js object
     let data = {

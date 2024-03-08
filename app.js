@@ -54,7 +54,7 @@ GROUP BY
 app.get('/customers', function (req, res) {
     let query1 = "SELECT Customers.*, DrinkCategories.category AS cocktailCategory FROM Customers LEFT JOIN DrinkCategories_has_Customers ON Customers.id = DrinkCategories_has_Customers.customerID LEFT JOIN DrinkCategories ON DrinkCategories_has_Customers.drinkCategoryID = DrinkCategories.id";               // Define our query
     let query2 = `SELECT * FROM DrinkCategories;`;
-     
+
 
     db.pool.query(query1, function (error, rows, fields) {  // execute 1st query
 
@@ -65,16 +65,16 @@ app.get('/customers', function (req, res) {
 
             // save the categories
             let cat_data = rows;
-            if (error){
+            if (error) {
                 console.log(error);
             }
-            else{
-                return res.render('customers', {data: customer, categories: cat_data});
+            else {
+                return res.render('customers', { data: customer, categories: cat_data });
             }
         })
 
         // res.render('customers', { data: rows });                  // Render the index.hbs file, and also send the renderer an object where 'data' is equal to the 'rows' we
-    })                                                      
+    })
 });
 
 // Add Customer
@@ -87,8 +87,15 @@ app.post('/add-customers-ajax', function (req, res) {
 
     // create a query and run it on the DB   
     query1 = "INSERT INTO Customers (firstName, lastName) VALUES (?, ?)";
+
     query2 = `INSERT INTO DrinkCategories_has_Customers (customerID, drinkCategoryID) VALUES ( ?, ?);`;
-    query3 = `SELECT * FROM Customers;`; 
+
+    query3 = `SELECT * FROM Customers;`;
+
+    checkQuery = `SELECT drinkCategoriesCustomersID FROM DrinkCategories_has_Customers WHERE customerID = ?`;
+
+    insertQuery = `INSERT INTO DrinkCategories_has_Customers (customerID, drinkCategoryID) VALUES (?, ?)`;
+
     db.pool.query(query1, [data.firstName, data.lastName], function (error, results) {
 
         // error check
@@ -96,14 +103,27 @@ app.post('/add-customers-ajax', function (req, res) {
             console.log(error);
             res.sendStatus(400);
         }
-        else { 
+
+
+        else {
+            db.pool.query(query3, function (error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                else {
+                    res.send(rows);
+                }
+            })
+
+
             // let newID = results.insertID;
             console.log(results);
         }
     })
 
     // we need to get the new customer ID before we can add to the intersection table
-    
+
 
 })
 
@@ -127,46 +147,77 @@ app.delete('/delete-customer-ajax', function (req, res, next) {
 
 // update customer
 app.put('/put-customer-ajax', function (req, res, next) {
-
     let data = req.body;
     console.log("Put request updating: ", req.body);
     let customerID = parseInt(data.id);
     let categoryID = parseInt(data.newPreferredCategory);
 
-
     queryUpdateCustomer = `UPDATE Customers SET firstName = ?, lastName = ? WHERE id = ?`;
-    queryUpdateCustomerCategory = `UPDATE DrinkCategories_has_Customers SET drinkCategoryID = ? WHERE customerID = ?`;
-    selectCustomer = `SELECT Customers.*, DrinkCategories.category AS cocktailCategory FROM Customers LEFT JOIN DrinkCategories_has_Customers ON Customers.id = DrinkCategories_has_Customers.customerID LEFT JOIN DrinkCategories ON DrinkCategories_has_Customers.drinkCategoryID = DrinkCategories.id;`;
 
-    db.pool.query(queryUpdateCustomer, [data.firstName, data.lastName, customerID], function (error, rows, fields) {
+    queryUpdateCustomerCategory = `UPDATE DrinkCategories_has_Customers SET drinkCategoryID = ? WHERE customerID = ?`;
+
+    selectCustomer = `SELECT Customers.*, DrinkCategories.category AS cocktailCategory FROM Customers LEFT JOIN DrinkCategories_has_Customers ON Customers.id = DrinkCategories_has_Customers.customerID LEFT JOIN DrinkCategories ON DrinkCategories_has_Customers.drinkCategoryID = DrinkCategories.id WHERE Customers.id = ?`;
+
+    checkQuery = `SELECT drinkCategoriesCustomersID FROM DrinkCategories_has_Customers WHERE customerID = ?`;
+
+    insertQuery = `INSERT INTO DrinkCategories_has_Customers (customerID, drinkCategoryID) VALUES (?, ?)`;
+
+    // Update customer basic information
+    db.pool.query(queryUpdateCustomer, [data.firstName, data.lastName, customerID], function (error) {
         if (error) {
             console.log(error);
             res.sendStatus(400);
+            return;
         }
-        else {
-            db.pool.query(queryUpdateCustomerCategory, [categoryID, customerID], function (error, rows, fields) {
-                if (error){
-                    console.log(error);
-                    res.sendStatus(400);
-                }
-                else{
+
+        // Check if a drink category exists for the customer
+        db.pool.query(checkQuery, [customerID], function (checkError, checkResults) {
+            if (checkError) {
+                console.error('Error checking for existing category:', checkError);
+                res.sendStatus(500); // Internal Server Error
+                return;
+            }
+
+            if (checkResults.length > 0) {
+                // An entry exists, update
+                db.pool.query(queryUpdateCustomerCategory, [categoryID, customerID], function (updateCategoryError) {
+                    if (updateCategoryError) {
+                        console.log(updateCategoryError);
+                        res.sendStatus(400);
+                        return;
+                    }
                     db.pool.query(selectCustomer, [customerID], function (error, rows, fields) {
                         if (error) {
                             console.log(error);
                             res.sendStatus(400);
                         }
                         else {
-                            console.log("We made it this far");
-                            console.log(rows);
                             res.send(rows);
                         }
                     })
-                }
-            })
-        }
-    })
+                });
+            } else {
+                // No entry exists, insert
+                db.pool.query(insertQuery, [customerID, categoryID], function (insertError) {
+                    if (insertError) {
+                        console.error('Error inserting new category:', insertError);
+                        res.sendStatus(500); // Internal Server Error
+                        return;
+                    }
+                    db.pool.query(selectCustomer, [customerID], function (error, rows, fields) {
+                        if (error) {
+                            console.log(error);
+                            res.sendStatus(400);
+                        }
+                        else {
+                            res.send(rows);
+                        }
+                    })
+                });
+            }
+        });
+    });
 });
-    
 
 /*INGREDIENTS*/
 app.get('/ingredients', function (req, res) {
