@@ -65,6 +65,37 @@
     <input type="submit" class="submit-button" style="float: right;">
 </form>
 
+{{!-- Form to update a Cocktail in the table --}}
+<h3>Update Cocktail:</h3>
+<form id="update-cocktail-form-ajax">
+
+    <label for="input-name">Choose Cocktail: </label>
+    <select name="input-name" id="select-cocktail" onchange="populateFields(this.value)">
+        <option value="">Select a Cocktail</option>
+        {{#each data}}
+        <option value="{{this.id}}">{{this.name}}</option>
+        {{/each}}
+    </select>
+
+    <label for="input-update-firstName"><br>Update name: </label>
+    <input type="text" name="input-update-name" id="input-update-name">
+    <br>
+
+    <label for="input-update-instructions">Update Instructions: </label>
+    <input type="text" name="input-update-instructions" id="input-update-instructions">
+    <br>
+    <label for="input-name">Update Glass Used: </label>
+    <input type="text" name="input-update-glass" id="input-update-glass">
+    <br>
+    <label for="input-name">Update Category: </label>
+    <input type="text" name="input-update-category" id="input-update-category">
+    <br>
+    <br>
+    <input type="submit" class="submit-button" style="float: right;">
+
+</form>
+
 {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
 <script src="./js/add_cocktail.js"></script>
 <script src="./js/delete_cocktail.js"></script>
+<script src="./js/update_cocktail.js"></script>

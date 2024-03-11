@@ -99,7 +99,7 @@ GROUP BY
     })
 })
 
-// Delete Customer
+// Delete Cocktail
 app.delete('/delete-cocktail-ajax', function (req, res, next) {
     let data = req.body;
     let cocktailID = parseInt(data.id);
@@ -112,6 +112,27 @@ app.delete('/delete-cocktail-ajax', function (req, res, next) {
         }
         else {
             res.sendStatus(204);
+        }
+    })
+})
+
+// Update Cocktail 
+app.put('/update-cocktail-ajax', function (req, res, next) {
+    let data = req.body;
+    console.log(req.body);
+    let cocktailID = parseInt(data.id);
+
+    queryUpdateCocktail = `UPDATE Cocktails SET name = ?, instructions = ?, glassUsed = ?, drinkCategoryID = ? WHERE id = ?;`;
+
+    db.pool.query(queryUpdateCocktail, [data.name, data.instructions, data.glass, data.category, data.id], function(error, rows, fields) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        }
+        else 
+        {
+            console.log(rows);
+            res.send(rows);
         }
     })
 })
