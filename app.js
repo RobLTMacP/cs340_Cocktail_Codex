@@ -50,6 +50,56 @@ GROUP BY
     })                                                      // an object where 'data' is equal to the 'rows' we
 });
 
+// add a cocktail
+app.post('/add-cocktail-ajax', function (req, res) {
+    // capture incoming data and parse it back to a JS object
+    let data = req.body;
+    console.log("Data is: ", data);
+
+    // capture null values
+
+    // create a query and run it on the DB   
+    let query1 = "INSERT INTO Cocktails(name, instructions, glassUsed, drinkCategoryID) VALUES (?, ?, ?, ?)";
+    let query2 = `SELECT 
+    Cocktails.*, 
+    GROUP_CONCAT(DISTINCT CONCAT(Ingredients.ingredientName, ': ', Cocktail_has_Ingredients.amountUsed) ORDER BY Cocktail_has_Ingredients.cocktailIngredientsID SEPARATOR ', ') AS Ingredients_Amounts,
+    GROUP_CONCAT(DISTINCT Tools.toolName ORDER BY Cocktail_has_Tools.cocktailToolID SEPARATOR ', ') AS Tools_Used
+FROM 
+    Cocktails
+LEFT JOIN 
+    Cocktail_has_Ingredients ON Cocktails.id = Cocktail_has_Ingredients.cocktailID
+LEFT JOIN 
+    Ingredients ON Cocktail_has_Ingredients.ingredientID = Ingredients.id
+LEFT JOIN 
+    Cocktail_has_Tools ON Cocktails.id = Cocktail_has_Tools.cocktailID
+LEFT JOIN 
+    Tools ON Cocktail_has_Tools.toolID = Tools.id
+GROUP BY 
+    Cocktails.id;`;
+    db.pool.query(query1, [data.name, data.instructions, data.glass, data.category], function (error, rows, results) {
+        
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        }
+
+        else {
+            db.pool.query(query2, function (error, rows, fields) {
+
+                if (error){
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                else
+                {
+                    res.send(rows);
+                }
+            })
+            }
+    })
+})
+
+
 /*CUSTOMERS*/
 app.get('/customers', function (req, res) {
     let query1 = "SELECT Customers.*, DrinkCategories.category AS cocktailCategory FROM Customers LEFT JOIN DrinkCategories_has_Customers ON Customers.id = DrinkCategories_has_Customers.customerID LEFT JOIN DrinkCategories ON DrinkCategories_has_Customers.drinkCategoryID = DrinkCategories.id";               // Define our query

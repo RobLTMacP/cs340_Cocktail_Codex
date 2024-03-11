@@ -9,11 +9,13 @@
         {{!-- For just the first row, we print each key of the row object as a header cell so we
         know what each column means when the page renders --}}
         <tr>
-            {{#each data.[0]}}
-            <th>
-                {{@key}}
-            </th>
-            {{/each}}
+            <th>Cocktail ID</th>
+            <th>Name</th>
+            <th>Instructions</th>
+            <th>Glass Used</th>
+            <th>Tools Used</th>
+            <th>Ingredients</th>
+            <th>Category</th>
             <th>Delete</th>
         </tr>
     </thead>
@@ -28,8 +30,8 @@
             <td>{{this.name}}</td>
             <td>{{this.instructions}}</td>
             <td>{{this.glassUsed}}</td>
-            <td>{{this.cocktailToolID}}</td>
-            <td>{{this.cocktailIngredientsID}}</td>
+            <td>{{this.Tools_Used}}</td>
+            <td>{{this.Ingredients_Amounts}}</td>
             <td>{{this.drinkCategoryID}}</td>
             <td><button class="delete-button" onclick="deleteIngredient({{this.id}})">Delete</button></td>
         </tr>
@@ -37,75 +39,31 @@
     </tbody>
 </table>
 
-  <div>
-    <div>
-      <h3>ADD COCKTAIL:</h3>
-      <form>
-        <label>
-          Name:
-          <input type="text">
-        </label><br>
-        <label>
-          Instructions:
-          <input type="text">
-        </label><br>
-        <label>
-          Glass:
-          <input type="text">
-        </label><br>
-        <label>
-          Drink Category (By ID#):
-          <input type="radio" name="drink_category" value="1"> 1: Old Fashioned
-          <input type="radio" name="drink_category" value="2"> 2: Daiquiri
-          <input type="radio" name="drink_category" value="3"> 3: Martini
-          <input type="radio" name="drink_category" value="4"> 4: Highball
-          <input type="radio" name="drink_category" value="5"> 5: Flip
-          <input type="radio" name="drink_category" value="6"> 6: Sidecar
-        </label><br>
-        <label>
-          Name:
-          <input type="text">
-        </label><br>
-        <input type="submit" value="Add Cocktail">
-      </form>
-    </div>
-    <div>
-      <h3>UPDATE COCKTAIL: </h3>
-      <form>
-        <label>Select a Cocktail to Update:</label>
-        <label>
-          <select name="cocktails">
-            <option value="old-fashioned">Old Fashioned</option>
-            <option value="rusty-nail">Rusty Nail</option>
-            <option value="negroni">Negroni</option>
-            <option value="brandy-alexander">Brandy Alexander</option>
-            <option value="tom-collins">Tom Collins</option>
-          </select>
-        </label>
-        <br>
-        <label>
-          Instructions:
-          <input type="text">
-        </label><br>
-        <label>
-          Glass:
-          <input type="text">
-        </label><br>
-        <label>
-          Drink Category (By ID#):
-          <input type="radio" name="drink_category" value="1"> 1: Old Fashioned
-          <input type="radio" name="drink_category" value="2"> 2: Daiquiri
-          <input type="radio" name="drink_category" value="3"> 3: Martini
-          <input type="radio" name="drink_category" value="4"> 4: Highball
-          <input type="radio" name="drink_category" value="5"> 5: Flip
-          <input type="radio" name="drink_category" value="6"> 6: Sidecar
-        </label><br>
-        <label>
-          Name:
-          <input type="text">
-        </label><br>
-        <input type="submit" value="Update">
-        <input type="submit" value="Delete">
-      </form>
-    </div>
-  </div>
+
+{{!-- Form to add a Cocktail to the table --}}
+<h3>Add Cocktail:</h3>
+<p>To add a new Cocktail to the table, please enter information below and submit:</p>
+<p>(To add or update Ingredients or Tools, please visit the Intersection tables!)</p>
+<form id="add-cocktail-form-ajax">
+    <label for="input-name">Cocktail Name: </label>
+    <input type="text" name="input-name" id="input-name">
+    <label for="input-instructions">
+    <br>
+    Instructions: </label><br>
+  <textarea class="large" name="input-instructions" rows="4" cols="25" id="input-instructions"></textarea>
+  <br>
+  <label for="input-glass">Glass Used: </label>
+    <input type="text" name="input-glass" id="input-glass">
+  <br>
+  <label for="input-cocktail-category">Cocktail Category by ID#: </label>
+    <input type="text" name="input-cocktail-category" id="input-cocktail-category">
+  
+  </select>
+
+    <br>
+    <br>
+    <input type="submit" class="submit-button" style="float: right;">
+</form>
+
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/add_cocktail.js"></script>
