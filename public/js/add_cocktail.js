@@ -86,7 +86,7 @@ addRowToTable = (data) => {
     deleteButton.classList.add("delete-button");
     deleteButton.textContent = "Delete";
     deleteButton.onclick = function () {
-        deleteCategory(newRow.id);
+        deleteCocktail(newRow.id);
     };
 
     // Fill the cells with correct data

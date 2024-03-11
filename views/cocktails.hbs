@@ -25,7 +25,7 @@
 
         {{!-- For each row, print info in order --}}
         {{#each data}}
-        <tr>
+        <tr data-value={{this.id}}>
             <td>{{this.id}}</td>
             <td>{{this.name}}</td>
             <td>{{this.instructions}}</td>
@@ -33,7 +33,7 @@
             <td>{{this.Tools_Used}}</td>
             <td>{{this.Ingredients_Amounts}}</td>
             <td>{{this.drinkCategoryID}}</td>
-            <td><button class="delete-button" onclick="deleteIngredient({{this.id}})">Delete</button></td>
+            <td><button class="delete-button" onclick="deleteCocktail({{this.id}})">Delete</button></td>
         </tr>
         {{/each}}
     </tbody>
@@ -67,3 +67,4 @@
 
 {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
 <script src="./js/add_cocktail.js"></script>
+<script src="./js/delete_cocktail.js"></script>

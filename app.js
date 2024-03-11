@@ -99,6 +99,23 @@ GROUP BY
     })
 })
 
+// Delete Customer
+app.delete('/delete-cocktail-ajax', function (req, res, next) {
+    let data = req.body;
+    let cocktailID = parseInt(data.id);
+    let query1 = `DELETE FROM Cocktails WHERE id = ?`;
+
+    db.pool.query(query1, [cocktailID], function (error, rows, fields) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        }
+        else {
+            res.sendStatus(204);
+        }
+    })
+})
+
 
 /*CUSTOMERS*/
 app.get('/customers', function (req, res) {
