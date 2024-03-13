@@ -514,6 +514,61 @@ app.get('/cocktailTools', function (req, res) {
     })                                                      // an object where 'data' is equal to the 'rows' we
 });
 
+//Cocktails+Tools ADD
+app.post('/add-cocktailTool-ajax', function (req, res) {
+    // capture incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // create a query and run it on the DB
+    let query1 = `INSERT INTO Cocktail_has_Tools (cocktailID, toolID) VALUES (?, ?);`;
+    
+    db.pool.query(query1, [data.cocktailID, data.toolID], function (error, rows, fields) {
+
+        if (error){
+            console.log(error);
+            res.send(400);
+        }
+        else
+        {
+            query2 = `SELECT * FROM Cocktail_has_Tools;`;
+            db.pool.query(query2, function (error, rows, fields) {
+                res.send(rows);
+            })
+        }
+    })
+})
+
+// COCKTAIL+TOOLS UPDATE
+app.put('/update-cocktailTool-ajax', function (req, res) {
+
+    let data = req.body;
+    console.log(req.body);
+    let id = parseInt(data.cocktailToolID);
+    console.log(id);
+
+
+    queryUpdateRelationship = `UPDATE Cocktail_has_Tools SET cocktailID = ?, toolID = ? WHERE cocktailToolID = ?`;
+    selectUpdate = `SELECT * from Cocktail_has_tools WHERE id = ?`
+
+    db.pool.query(queryUpdateRelationship, [data.cocktailID, data.toolID, id], function (error, rows, fields) {
+        if (error) {
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else {
+            db.pool.query(selectUpdate, [id], function (error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                else {
+                    res.send(rows);
+                }
+            })
+        }
+    }) 
+})
+
 /*CUSTOMERS*/
 app.get('/customers', function (req, res) {
     res.render('customers');

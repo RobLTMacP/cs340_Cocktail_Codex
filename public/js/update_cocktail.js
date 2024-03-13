@@ -74,14 +74,14 @@ function updateRow(data, ID) {
             let td4 = updateRowIndex.getElementsByTagName("td")[6];
 
             // Reassign description to our value we updated to
-            td1.innerHTML = parsedData[0].name;
-            td2.innerHTML = parsedData[0].instructions;
-            td3.innerHTML = parsedData[0].glass;
-            td4.innerHTML = parsedData[0].category;
+            td1.innerHTML = parsedData.name;
+            td2.innerHTML = parsedData.instructions;
+            td3.innerHTML = parsedData.glass;
+            td4.innerHTML = parsedData.category;
 
             // Update dropdown menu
             selectMenu = document.getElementById("select-cocktail");
-            selectMenu.options[i].text = parsedData[0].name;
+            selectMenu.options[i].text = parsedData.name;
         }
     }
 }

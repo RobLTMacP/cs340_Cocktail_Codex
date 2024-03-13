@@ -36,36 +36,38 @@
 
 <h3>ADD RELATIONSHIP:</h3>
 
-<form>
-  <label>
-    Cocktail Tool ID:
-    <input type="text">
-  </label><br>
-  <label>
-    Tool ID:
-    <input type="text">
-  </label><br>
-  <label>
-    Cocktail ID:
-    <input type="text">
-  </label><br>
+<form id="add-cocktailTool-form-ajax">
+  <label for="input-cocktailID">Cocktail ID: </label>
+    <input type="text" name="input-cocktailID" id="input-cocktailID"><br>
+  <label for="input-toolID">Tool ID: </label>
+    <input type="text" name="input-toolID" id="input-toolID">
+    <br>
+    <br>
+    <input type="submit" class="submit-button" style="float: right;">
 </form>
 
 <div>
   <h3>UPDATE RELATIONSHIP:</h3>
-
-  <form>
-    <label>
-      Cocktail Tool ID:
-      <input type="text">
-    </label><br>
-    <label>
-      Tool ID:
-      <input type="text">
-    </label><br>
-    <label>
-      Cocktail ID:
-      <input type="text">
-    </label><br>
-  </form>
+  <form id="update-cocktailTool-form-ajax">
+    <label for="input-name">Choose Relationship ID: </label>
+    <select name="input-id" id="select-cocktailtoolID">
+        <option value="">Select a CocktailToolID</option>
+        {{#each data}}
+        <option value="{{this.cocktailToolID}}">{{this.cocktailToolID}}</option>
+        {{/each}}
+    </select>
+  <br>
+  <label for="input-cocktailID">Cocktail ID: </label>
+    <input type="text" name="input-cocktailID" id="input-cocktailID"><br>
+  <label for="input-toolID">Tool ID: </label>
+    <input type="text" name="input-toolID" id="input-toolID">
+    <br>
+    <br>
+    <input type="submit" class="submit-button" style="float: right;">
+</form>
 </div>
+  
+
+
+<script src="./js/add_cocktail_tool.js"></script>
+<script src = "./js/update_cocktail_tool.js"></script>
