@@ -28,7 +28,7 @@
       <td>{{this.cocktailToolID}}</td>
       <td>{{this.cocktailID}}</td>
       <td>{{this.toolID}}</td>
-      <td><button class="delete-button" onclick="deleteTool({{this.cocktailToolID}})">Delete</button></td>
+      <td><button class="delete-button" onclick="deleteCocktailTool({{this.cocktailToolID}})">Delete</button></td>
     </tr>
     {{/each}}
   </tbody>
@@ -58,9 +58,9 @@
     </select>
   <br>
   <label for="input-cocktailID">Cocktail ID: </label>
-    <input type="text" name="input-cocktailID" id="input-cocktailID"><br>
+    <input type="text" name="input-cocktailID" id="input-update-cocktailID"><br>
   <label for="input-toolID">Tool ID: </label>
-    <input type="text" name="input-toolID" id="input-toolID">
+    <input type="text" name="input-toolID" id="input-update-toolID">
     <br>
     <br>
     <input type="submit" class="submit-button" style="float: right;">
@@ -71,3 +71,4 @@
 
 <script src="./js/add_cocktail_tool.js"></script>
 <script src = "./js/update_cocktail_tool.js"></script>
+<script src = "./js/delete_cocktail_tool.js"></script>

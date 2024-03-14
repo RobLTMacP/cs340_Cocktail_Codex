@@ -29,44 +29,45 @@
       <td>{{this.cocktailID}}</td>
       <td>{{this.ingredientID}}</td>
       <td>{{this.amountUsed}}</td>
-      <td><button class="delete-button" onclick="deleteTool({{this.cocktailIngredientsID}})">Delete</button></td>
+      <td><button class="delete-button" onclick="deleteCocktailIngredient({{this.cocktailIngredientsID}})">Delete</button></td>
     </tr>
     {{/each}}
   </tbody>
 </table>
 
 <h3>ADD RELATIONSHIP:</h3>
-
-<form>
-  <label>
-    Cocktail Ingredients ID:
-    <input type="text">
-  </label><br>
-  <label>
-    Cocktail ID:
-    <input type="text">
-  </label><br>
-  <label>
-    Ingredient ID:
-    <input type="text">
-  </label><br>
+<form id="add-cocktail-ingredient-form-ajax">
+  <label for="input-cocktailID">Cocktail ID: </label>
+    <input type="text" name="input-cocktailID" id="input-cocktailID"><br>
+  <label for="input-ingredientID">Ingredient ID: </label>
+    <input type="text" name="input-ingredientID" id="input-ingredientID">
+    <br>
+  <label for="input-cocktailID">Amount Used: </label>
+    <input type="text" name="input-amount" id="input-amount"><br>
+    <br>
+    <input type="submit" class="submit-button" style="float: right;">
 </form>
 
 <div>
   <h3>UPDATE RELATIONSHIP:</h3>
-
-  <form>
-    <label>
-      Cocktail Ingredients ID:
-      <input type="text">
-    </label><br>
-    <label>
-      Cocktail ID:
-      <input type="text">
-    </label><br>
-    <label>
-      Ingredient ID:
-      <input type="text">
-    </label><br>
-  </form>
+  <form id="update-cocktailIngredient-form-ajax">
+    <label for="input-name">Choose Relationship ID: </label>
+    <select name="input-id" id="select-cocktailIngredientID">
+        <option value="">Select an ID to update: </option>
+        {{#each data}}
+        <option value="{{this.cocktailIngredientsID}}">{{this.cocktailIngredientsID}}</option>
+        {{/each}}
+    </select>
+  <br>
+  <label for="input-amount">Amount used: </label>
+    <input type="text" name="input-amount" id="input-amount-update">
+    <br>
+    <br>
+    <input type="submit" class="submit-button" style="float: right;">
+</form>
 </div>
+</div>
+
+<script src="./js/add_cocktail_ingredient.js"></script>
+<script src="./js/delete_cocktail_ingredient.js"></script>
+<script src="./js/update_cocktail_ingredient.js"></script>

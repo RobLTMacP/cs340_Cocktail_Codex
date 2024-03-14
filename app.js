@@ -499,6 +499,84 @@ app.get('/cocktailIngredients', function (req, res) {
     })                                                      // an object where 'data' is equal to the 'rows' we
 });
 
+// COCKTAILS INGREDIENTS ADD
+app.post('/add-cocktailIngredient-ajax', function (req, res) {
+    // capture incoming data and parse it back to a JS object
+    let data = req.body;
+    let cocktailID = parseInt(data.cocktailID);
+    let ingredientID = parseInt(data.ingredientID);
+    let amount = parseInt(data.amount);
+
+    // create a query and run it on the DB
+    let query1 = `INSERT INTO Cocktail_has_Ingredients (cocktailID, ingredientID, amountUsed) VALUES ( ?, ?, ?);`;
+    
+    db.pool.query(query1, [cocktailID, ingredientID, amount], function (error, rows, fields) {
+
+        if (error){
+            console.log(error);
+            res.send(400);
+        }
+        else
+        {
+            query2 = "SELECT * FROM Cocktail_has_Ingredients;";
+            db.pool.query(query2, function (error, rows, fields) {
+                res.send(rows);
+            })
+        }
+    })
+})
+
+// DELETE Cocktail_Ingredient
+app.delete('/delete-cocktailIngredient-ajax', function (req, res, next) {
+    let data = req.body;
+    let cocktailIngredientID = parseInt(data.id);
+    let deleteRelationship = `DELETE FROM Cocktail_has_Ingredients WHERE cocktailIngredientsID = ?`;
+
+    db.pool.query(deleteRelationship, [cocktailIngredientID], function (error, rows, fields) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        }
+        else {
+            res.sendStatus(204);
+        }
+    })
+})
+
+// UPDATE Cocktail + Ingredient
+app.put('/update-cocktailIngredients-ajax', function (req, res) {
+
+    let data = req.body;
+    console.log("data on app side is: ", data);
+    let id = parseInt(data.id);
+    let amount = parseFloat(data.amount);
+    console.log(id);
+
+
+    queryUpdateRelationship = `UPDATE Cocktail_has_Ingredients SET amountUsed = ? WHERE cocktailIngredientsID = ?;`;
+    selectUpdate = `SELECT * from Cocktail_has_Ingredients WHERE cocktailIngredientsID = ?;`;
+
+    db.pool.query(queryUpdateRelationship, [amount, id], function (error, rows, fields) {
+        if (error) {
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else {
+            db.pool.query(selectUpdate, [id], function (error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                else {
+                    res.send(rows);
+                }
+            })
+        }
+    }) 
+})
+
+
+
 /*COCKTAILS*/
 app.get('/cocktails', function (req, res) {
     res.render('cocktails');
@@ -542,15 +620,17 @@ app.post('/add-cocktailTool-ajax', function (req, res) {
 app.put('/update-cocktailTool-ajax', function (req, res) {
 
     let data = req.body;
-    console.log(req.body);
+    console.log("data on app side is: ", data);
     let id = parseInt(data.cocktailToolID);
+    let cocktailID = parseInt(data.cocktailID);
+    let toolID = parseInt(data.toolID);
     console.log(id);
 
 
     queryUpdateRelationship = `UPDATE Cocktail_has_Tools SET cocktailID = ?, toolID = ? WHERE cocktailToolID = ?`;
-    selectUpdate = `SELECT * from Cocktail_has_tools WHERE id = ?`
+    selectUpdate = `SELECT * from Cocktail_has_Tools WHERE cocktailToolID = ?`
 
-    db.pool.query(queryUpdateRelationship, [data.cocktailID, data.toolID, id], function (error, rows, fields) {
+    db.pool.query(queryUpdateRelationship, [cocktailID, toolID, id], function (error, rows, fields) {
         if (error) {
             console.log(error)
             res.sendStatus(400);
@@ -568,6 +648,24 @@ app.put('/update-cocktailTool-ajax', function (req, res) {
         }
     }) 
 })
+
+// cocktails + tools DELETE
+app.delete('/delete-cocktailTool-ajax', function (req, res, next) {
+    let data = req.body;
+    let cocktailToolID = parseInt(data.id);
+    let deleteRelationship = `DELETE FROM Cocktail_has_Tools WHERE cocktailToolID = ?`;
+
+    db.pool.query(deleteRelationship, [cocktailToolID], function (error, rows, fields) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        }
+        else {
+            res.sendStatus(204);
+        }
+    })
+})
+
 
 /*CUSTOMERS*/
 app.get('/customers', function (req, res) {

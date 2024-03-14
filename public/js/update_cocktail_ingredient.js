@@ -1,33 +1,30 @@
-let updateCocktailToolForm = document.getElementById("update-cocktailTool-form-ajax");
+let updateCocktalIngredientsForm = document.getElementById("update-cocktailIngredient-form-ajax");
 
-updateCocktailToolForm.addEventListener("submit", function (e) {
+updateCocktalIngredientsForm.addEventListener("submit", function (e) {
 
-    e.preventDefault();
+    e.preventDefault;
 
     // Get form fields we need to get data from
-    let inputCocktailToolID = document.getElementById("select-cocktailtoolID");
-    let inputcocktailID = document.getElementById("input-update-cocktailID");
-    let inputToolID = document.getElementById("input-update-toolID");
-
-    console.log("updatejs has vals: ", inputCocktailToolID, inputToolID, inputcocktailID );
+    let inputCocktailIngredientID = document.getElementById("select-cocktailIngredientID");
+    let inputAmount = document.getElementById("input-amount-update");
 
     // Get the values from the form fields
-    let cocktailToolIDValue = inputCocktailToolID.value;
-    let cockIDValue = inputcocktailID.value;
-    let toolIDValue = inputToolID.value;
+    let cocktailIngredientIDValue = inputCocktailIngredientID.value;
+    let amountValue = inputAmount.value;
+
+    console.log("AMOUNT IS: ", amountValue);
 
     // Put our data we want to send in a javascript object
     let data = {
-        cocktailToolID: cocktailToolIDValue,
-        cocktailID: cockIDValue,
-        toolID: toolIDValue
+        id: cocktailIngredientIDValue,
+        amount: amountValue
     }
-
-    console.log("DATA on js side is: ", data);
+    
+    console.log("DATA IN JS SIDE IS: ", data);
 
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest();
-    xhttp.open("PUT", "/update-cocktailTool-ajax", true);
+    xhttp.open("PUT", "/update-cocktailIngredients-ajax", true);
     xhttp.setRequestHeader("Content-type", "application/json");
 
     // Tell our AJAX request how to resolve
@@ -35,13 +32,11 @@ updateCocktailToolForm.addEventListener("submit", function (e) {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
 
             // Add the new data to the table
-            updateRow(xhttp.response);
+            updateRow(data);
 
             // Clear the input fields for another transaction
-            inputcocktailID.value = '';
-            inputToolID.value = '';
-
-
+            inputCocktailIngredientID.value = '';
+            inputAmount.value = '';
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {
             console.log("There was an error with the input.")
@@ -50,15 +45,14 @@ updateCocktailToolForm.addEventListener("submit", function (e) {
 
     // Send the request and wait for the response
     xhttp.send(JSON.stringify(data));
-
 })
 
 function updateRow(data) {
     let parsedData = JSON.parse(data);
-    let ID = parsedData[0].cocktailToolID;
+    let ID = parsedData[0].id;
     console.log(parsedData);
 
-    let table = document.getElementById("cocktailTools-table");
+    let table = document.getElementById("cocktailIngredients-table");
 
     for (let i = 0, row; row = table.rows[i]; i++) {
         //iterate through rows
@@ -69,12 +63,10 @@ function updateRow(data) {
             let updateRowIndex = table.getElementsByTagName("tr")[i];
 
             // Get td of values
-            let td1 = updateRowIndex.getElementsByTagName("td")[1];
-            let td2 = updateRowIndex.getElementsByTagName("td")[2];
+            let td1 = updateRowIndex.getElementsByTagName("td")[3];
 
             // Reassign description to our value we updated to
-            td1.innerHTML = parsedData[0].cocktailID;
-            td2.innerHTML = parsedData[0].toolID;
+            td1.innerHTML = parsedData[0].amount;
         }
     }
 }

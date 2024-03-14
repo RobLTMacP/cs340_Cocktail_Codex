@@ -1,30 +1,35 @@
 // Get the objects we need to modify
-let addCategoryForm = document.getElementById('add-category-form-ajax');
-console.log(addCategoryForm);
+let addCocktailIngredientForm = document.getElementById('add-cocktail-ingredient-form-ajax');
+console.log(addCocktailIngredientForm);
 
 // Modify the objects we need
-addCategoryForm.addEventListener("submit", function (e) {
+addCocktailIngredientForm.addEventListener("submit", function (e) {
 
     // Prevent the form from submitting
     e.preventDefault();
 
     // Get form fields we need to get data from
-    let inputName = document.getElementById("input-name");
-    let inputDescription = document.getElementById("input-description");
+    let inputCocktailID = document.getElementById("input-cocktailID");
+    let inputIngredientID = document.getElementById("input-ingredientID");
+    let inputAmount = document.getElementById("input-amount");
 
     // Get the values from the form fields
-    let nameValue = inputName.value;
-    let descriptionValue = inputDescription.value;
+    let cocktailIDValue = inputCocktailID.value;
+    let ingredientIDValue = inputIngredientID.value;
+    let amountValue = inputAmount.value;
 
     // Put our data we want to send in a javascript object
     let data = {
-        category: nameValue,
-        description: descriptionValue,
+        cocktailID: cocktailIDValue,
+        ingredientID: ingredientIDValue,
+        amount: amountValue
     }
+
+    console.log("Data from js is: ", data);
 
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "/add-category-ajax", true);
+    xhttp.open("POST", "/add-cocktailIngredient-ajax", true);
     xhttp.setRequestHeader("Content-type", "application/json");
 
     // Tell our AJAX request how to resolve
@@ -35,8 +40,9 @@ addCategoryForm.addEventListener("submit", function (e) {
             addRowToTable(xhttp.response);
 
             // Clear the input fields for another transaction
-            inputName.value = '';
-            inputDescription.value = '';
+            inputCocktailID.value = '';
+            inputIngredientID.value = '';
+            inputAmount.value = '';
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {
             console.log("There was an error with the input.")
@@ -49,13 +55,12 @@ addCategoryForm.addEventListener("submit", function (e) {
 })
 
 
-// Creates a single row from an Object representing a single record from 
-// bsg_people
+// Creates a single row from an Object representing a single record from table
 addRowToTable = (data) => {
     console.log("Received data:", data);
 
     // Get a reference to the current table on the page and clear it out.
-    let currentTable = document.getElementById("categories-table");
+    let currentTable = document.getElementById("cocktailIngredients-table");
 
     // Get the location where we should insert the new row (end of table)
     let newRowIndex = currentTable.rows.length;
@@ -66,48 +71,38 @@ addRowToTable = (data) => {
     console.log("Parsed data:", parsedData);
     // Create a row and 4 cells
     let row = document.createElement("TR");
-    let idCell = document.createElement("TD");
-    let nameCell = document.createElement("TD");
-    let descriptionCell = document.createElement("TD");
-
+    let cocktailIngredientIDCell = document.createElement("TD");
+    let cocktailIDCell = document.createElement("TD");
+    let ingredientIDCell = document.createElement("TD");
+    let amountCell = document.createElement("TD");
     let deleteCell = document.createElement("TD");
 
     let deleteButton = document.createElement("button");
     deleteButton.classList.add("delete-button");
     deleteButton.textContent = "Delete";
     deleteButton.onclick = function () {
-        deleteCategory(newRow.id);
+        deleteCocktailIngredient(newRow.id);
     };
 
     // Fill the cells with correct data
-    idCell.innerText = newRow.id;
-    nameCell.innerText = newRow.category;
-    descriptionCell.innerText = newRow.description;
-
-    console.log("ID Cell:", idCell.innerText);
-    console.log("Name Cell:", nameCell.innerText);
-    console.log("Description Cell:", descriptionCell.innerText);
+    cocktailIngredientIDCell.innerText = newRow.cocktailIngredientsID;
+    cocktailIDCell.innerText = newRow.cocktailID;
+    ingredientIDCell.innerText = newRow.ingredientID;
+    amountCell.innerText = newRow.amountUsed;
 
     // Append the delete button to the deleteCell
     deleteCell.appendChild(deleteButton);
 
     // Add the cells to the row 
-    row.appendChild(idCell);
-    row.appendChild(nameCell);
-    row.appendChild(descriptionCell);
+    row.appendChild(cocktailIngredientIDCell);
+    row.appendChild(cocktailIDCell);
+    row.appendChild(ingredientIDCell);
+    row.appendChild(amountCell);
     row.appendChild(deleteCell)
 
-    row.setAttribute('data-value', newRow.id);
+    row.setAttribute('data-value', newRow.cocktailIngredientsID);
 
     // Add the row to the table
     currentTable.appendChild(row);
-
-    // Find drop down menu, create a new option, fill data in the option,
-    // then append option to drop down menu so newly created rows via ajax will be found in it without needing a refresh
-    let selectMenu = document.getElementById("category-select");
-    let option = document.createElement("option");
-    option.text = newRow.category;
-    option.value = newRow.id;
-    selectMenu.add(option);
 }
 
