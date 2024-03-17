@@ -1,3 +1,8 @@
+/*
+    Code adapted from the provided GitHub repository:
+    github.com/osu-cs340-ecampus/nodejs-starter-app
+*/
+
 // Get the objects we need to modify
 let addCustomerForm = document.getElementById('add-customer-form-ajax');
 

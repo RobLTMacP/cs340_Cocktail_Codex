@@ -1,3 +1,8 @@
+/*
+    Code adapted from the provided GitHub repository:
+    github.com/osu-cs340-ecampus/nodejs-starter-app
+*/
+
 let updateCocktailForm = document.getElementById('update-cocktail-form-ajax');
 
 // modify the objects we need

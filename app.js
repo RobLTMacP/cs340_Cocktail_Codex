@@ -1,6 +1,12 @@
 // App.js
 
 /*
+    Code adapted from the provided GitHub repository:
+    github.com/osu-cs340-ecampus/nodejs-starter-app
+*/
+
+
+/*
     SETUP
 */
 var express = require('express');   // We are using the express library for the web server
@@ -209,10 +215,6 @@ app.post('/add-customers-ajax', function (req, res) {
             console.log(results);
         }
     })
-
-    // we need to get the new customer ID before we can add to the intersection table
-
-
 })
 
 // Delete Customer

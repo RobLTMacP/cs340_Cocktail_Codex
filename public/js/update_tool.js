@@ -1,3 +1,9 @@
+/*
+    Code adapted from the provided GitHub repository:
+    github.com/osu-cs340-ecampus/nodejs-starter-app
+*/
+
+
 let updateToolForm = document.getElementById('update-tool-form-ajax');
 
 // modify the objects we need

@@ -1,3 +1,8 @@
+/*
+    Code adapted from the provided GitHub repository:
+    github.com/osu-cs340-ecampus/nodejs-starter-app
+*/
+
 let updateCocktailToolForm = document.getElementById("update-cocktailTool-form-ajax");
 
 updateCocktailToolForm.addEventListener("submit", function (e) {
