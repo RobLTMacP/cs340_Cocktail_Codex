@@ -177,18 +177,12 @@ app.post('/add-customers-ajax', function (req, res) {
     let data = req.body;
     console.log("Data is: ", data);
 
-    // capture null values
-
     // create a query and run it on the DB   
     query1 = "INSERT INTO Customers (firstName, lastName) VALUES (?, ?)";
 
     query2 = `INSERT INTO DrinkCategories_has_Customers (customerID, drinkCategoryID) VALUES ( ?, ?);`;
 
-    query3 = `SELECT * FROM Customers;`;
-
-    checkQuery = `SELECT drinkCategoriesCustomersID FROM DrinkCategories_has_Customers WHERE customerID = ?`;
-
-    insertQuery = `INSERT INTO DrinkCategories_has_Customers (customerID, drinkCategoryID) VALUES (?, ?)`;
+    query3 = "SELECT Customers.*, DrinkCategories.category AS cocktailCategory FROM Customers LEFT JOIN DrinkCategories_has_Customers ON Customers.id = DrinkCategories_has_Customers.customerID LEFT JOIN DrinkCategories ON DrinkCategories_has_Customers.drinkCategoryID = DrinkCategories.id";
 
     db.pool.query(query1, [data.firstName, data.lastName], function (error, results) {
 
@@ -197,23 +191,31 @@ app.post('/add-customers-ajax', function (req, res) {
             console.log(error);
             res.sendStatus(400);
         }
-
-
         else {
-            db.pool.query(query3, function (error, rows, fields) {
+            getIDQuery = `SELECT id FROM Customers WHERE Customers.firstName = ? AND Customers.lastName = ?;`;
+            db.pool.query(getIDQuery, [data.firstName, data.lastName], function(error, rows, fields) {
+                
                 if (error) {
                     console.log(error);
                     res.sendStatus(400);
                 }
-                else {
-                    res.send(rows);
+                else{
+                    console.log("ROWS = ", rows);
+                    let id = rows[0].id;
+                    console.log("ID: ", id);
+                        db.pool.query(query2, [id, data.preferredCategory], function (error, rows, fields){
+                            if (error) {
+                                console.log(error);
+                                res.sendStatus(400);
+                            }
+                            else {
+                                res.send({customerid: id, firstName: data.firstName, lastName: data.lastName, preferredCategory: data.preferredCategory});
+                            }
+                        })            
                 }
             })
-
-
-            // let newID = results.insertID;
-            console.log(results);
         }
+
     })
 })
 

@@ -38,8 +38,11 @@ addCustomerForm.addEventListener("submit", function (e) {
     xhttp.onreadystatechange = () => {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
 
+            
+            data = xhttp.response;
+            console.log("XHTTP DATA: ", data);
             // Add the new data to the table
-            addRowToTable(xhttp.response);
+            addRowToTable(data);
 
             // Clear the input fields for another transaction
             inputFName.value = '';
@@ -70,7 +73,6 @@ addRowToTable = (data) => {
 
     // Get a reference to the new row from the database query (last object)
     let parsedData = JSON.parse(data);
-    let newRow = parsedData[parsedData.length - 1]
     console.log("Parsed data:", parsedData);
     // Create a row and 4 cells
     let row = document.createElement("TR");
@@ -88,14 +90,14 @@ addRowToTable = (data) => {
     };
 
     // Fill the cells with correct data
-    idCell.innerText = newRow.id;
-    firstNameCell.innerText = newRow.firstName;
-    lastNameCell.innerText = newRow.lastName;
-    if(!newRow.preferredCategory){
+    idCell.innerText = parsedData.customerid;
+    firstNameCell.innerText = parsedData.firstName;
+    lastNameCell.innerText = parsedData.lastName;
+    if(!parsedData.preferredCategory){
         cocktailCategoryCell.innerText = '';
     }
     else {
-        cocktailCategoryCell.innerText = newRow.preferredCategory;
+        cocktailCategoryCell.innerText = parsedData.preferredCategory;
     }
     
 
@@ -114,7 +116,7 @@ addRowToTable = (data) => {
     row.appendChild(cocktailCategoryCell);
     row.appendChild(deleteCell)
 
-    row.setAttribute('data-value', newRow.id);
+    row.setAttribute('data-value', parsedData.customerid);
 
     // Add the row to the table
     currentTable.appendChild(row);
@@ -123,7 +125,7 @@ addRowToTable = (data) => {
     // then append option to drop down menu so newly created rows via ajax will be found in it without needing a refresh
     let selectMenu = document.getElementById("select-customer");
     let option = document.createElement("option");
-    option.text = newRow.firstName + ' ' + newRow.lastName;
-    option.value = newRow.id;
+    option.text = parsedData.firstName + ' ' + parsedData.lastName;
+    option.value = parsedData.customerid;
     selectMenu.add(option);
 }
