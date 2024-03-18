@@ -19,6 +19,7 @@ PORT = 9731;                 // Set a port number at the top so it's easy to cha
 var db = require('./database/db-connector')
 const { engine } = require('express-handlebars');
 var exphbs = require('express-handlebars');     // Import express-handlebars
+const { getOptions } = require('forever/lib/forever/cli');
 app.engine('.hbs', engine({ extname: ".hbs" }));  // Create an instance of the handlebars engine to process templates
 app.set('view engine', '.hbs');                 // Tell express to use the handlebars engine whenever it encounters a *.hbs file.
 
@@ -165,9 +166,7 @@ app.get('/customers', function (req, res) {
             else {
                 return res.render('customers', { data: customer, categories: cat_data });
             }
-        })
-
-        // res.render('customers', { data: rows });                  // Render the index.hbs file, and also send the renderer an object where 'data' is equal to the 'rows' we
+        })       
     })
 });
 
@@ -209,7 +208,18 @@ app.post('/add-customers-ajax', function (req, res) {
                                 res.sendStatus(400);
                             }
                             else {
-                                res.send({customerid: id, firstName: data.firstName, lastName: data.lastName, preferredCategory: data.preferredCategory});
+                                getCategoryQuery = `SELECT category FROM DrinkCategories WHERE id = ?;`;
+                                db.pool.query(getCategoryQuery, [data.preferredCategory], function (error, rows, fields){
+                                    if (error){
+                                        console.log(error);
+                                        res.sendStatus(400);
+                                    }
+                                    else{
+                                        console.log("CAT REQ: ", rows);
+                                        let cat = rows[0].category;
+                                        res.send({customerid: id, firstName: data.firstName, lastName: data.lastName, preferredCategory: cat});
+                                    }
+                                })
                             }
                         })            
                 }
@@ -670,6 +680,11 @@ app.delete('/delete-cocktailTool-ajax', function (req, res, next) {
     })
 })
 
+
+/*CUSTOMERS*/
+app.get('/customers', function (req, res) {
+    res.render('customers');
+});
 
 /*DRINK CATEGORIES CUSTOMERS*/
 app.get('/drinkCategoriesCustomers', function (req, res) {
