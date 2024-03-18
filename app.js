@@ -624,12 +624,38 @@ app.get('/cocktails', function (req, res) {
 
 /*COCKTAIL TOOLS*/
 app.get('/cocktailTools', function (req, res) {
-    let query1 = "SELECT * FROM Cocktail_has_Tools;";               // Define our query
+    let query1 = "SELECT * FROM Cocktail_has_Tools;";
+    let query2 = `SELECT id, name FROM Cocktails;`;
+    let query3 = `SELECT id, toolName FROM Tools;`;               
 
-    db.pool.query(query1, function (error, rows, fields) {    // Execute the query
-
-        res.render('cocktailTools', { data: rows });                  // Render the index.hbs file, and also send the renderer
-    })                                                      // an object where 'data' is equal to the 'rows' we
+    db.pool.query(query1, function (error, rows, fields) {
+        if(error){
+            console.log(error);
+            res.sendStatus(400);
+        }
+        else{
+            let data = rows;
+            db.pool.query(query2, function(error, rows, fields) {
+                if (error){
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                else{
+                    let cocktails = rows;
+                    db.pool.query(query3, function(error, rows, fields) {
+                        if (error){
+                            console.log(error);
+                            res.sendStatus(400);
+                        }
+                        else{
+                            let tools = rows;
+                            res.render('cocktailTools', { data, cocktails, tools });
+                        }
+                    })
+                }
+            })
+        }                  
+    })                                                      
 });
 
 //Cocktails+Tools ADD
