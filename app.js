@@ -35,7 +35,11 @@ app.get('/', function (req, res) {
 /*COCKTAILS*/
 app.get('/cocktails', function (req, res) {
     let query1 = `SELECT 
-    Cocktails.*, 
+    Cocktails.id,
+    Cocktails.name,
+    Cocktails.instructions,
+    Cocktails.glassUsed,
+    DrinkCategories.category AS Category_Name,
     GROUP_CONCAT(DISTINCT CONCAT(Ingredients.ingredientName, ': ', Cocktail_has_Ingredients.amountUsed) ORDER BY Cocktail_has_Ingredients.cocktailIngredientsID SEPARATOR ', ') AS Ingredients_Amounts,
     GROUP_CONCAT(DISTINCT Tools.toolName ORDER BY Cocktail_has_Tools.cocktailToolID SEPARATOR ', ') AS Tools_Used
 FROM 
@@ -48,20 +52,22 @@ LEFT JOIN
     Cocktail_has_Tools ON Cocktails.id = Cocktail_has_Tools.cocktailID
 LEFT JOIN 
     Tools ON Cocktail_has_Tools.toolID = Tools.id
-GROUP BY 
-    Cocktails.id;`;               
+    LEFT JOIN 
+    DrinkCategories ON Cocktails.drinkCategoryID = DrinkCategories.id -- This is the new JOIN to include the category name
+    GROUP BY 
+    Cocktails.id;`;
 
     db.pool.query(query1, function (error, rows, fields) {
 
-        if(error) {
+        if (error) {
             console.log(error);
             res.sendStatus(400);
         }
         else {
             let data = rows;
             let query2 = `SELECT id, category FROM DrinkCategories;`;
-            db.pool.query(query2, function(error, rows, fields) {
-                if (error){
+            db.pool.query(query2, function (error, rows, fields) {
+                if (error) {
                     console.log(error);
                     res.sendStatus(400);
                 }
@@ -70,8 +76,8 @@ GROUP BY
                     res.render('cocktails', { data, categories });
                 }
             })
-        }                  
-    })                                                      
+        }
+    })
 });
 
 // add a cocktail
@@ -101,7 +107,7 @@ LEFT JOIN
 GROUP BY 
     Cocktails.id;`;
     db.pool.query(query1, [data.name, data.instructions, data.glass, data.category], function (error, rows, results) {
-        
+
         if (error) {
             console.log(error);
             res.sendStatus(400);
@@ -110,16 +116,15 @@ GROUP BY
         else {
             db.pool.query(query2, function (error, rows, fields) {
 
-                if (error){
+                if (error) {
                     console.log(error);
                     res.sendStatus(400);
                 }
-                else
-                {
+                else {
                     res.send(rows);
                 }
             })
-            }
+        }
     })
 })
 
@@ -148,13 +153,12 @@ app.put('/update-cocktail-ajax', function (req, res, next) {
 
     queryUpdateCocktail = `UPDATE Cocktails SET name = ?, instructions = ?, glassUsed = ?, drinkCategoryID = ? WHERE id = ?;`;
 
-    db.pool.query(queryUpdateCocktail, [data.name, data.instructions, data.glass, data.category, data.id], function(error, rows, fields) {
+    db.pool.query(queryUpdateCocktail, [data.name, data.instructions, data.glass, data.category, data.id], function (error, rows, fields) {
         if (error) {
             console.log(error);
             res.sendStatus(400);
         }
-        else 
-        {
+        else {
             console.log(rows);
             res.send(rows);
         }
@@ -183,7 +187,7 @@ app.get('/customers', function (req, res) {
             else {
                 return res.render('customers', { data: customer, categories: cat_data });
             }
-        })       
+        })
     })
 });
 
@@ -209,36 +213,36 @@ app.post('/add-customers-ajax', function (req, res) {
         }
         else {
             getIDQuery = `SELECT id FROM Customers WHERE Customers.firstName = ? AND Customers.lastName = ?;`;
-            db.pool.query(getIDQuery, [data.firstName, data.lastName], function(error, rows, fields) {
-                
+            db.pool.query(getIDQuery, [data.firstName, data.lastName], function (error, rows, fields) {
+
                 if (error) {
                     console.log(error);
                     res.sendStatus(400);
                 }
-                else{
+                else {
                     console.log("ROWS = ", rows);
                     let id = rows[0].id;
                     console.log("ID: ", id);
-                        db.pool.query(query2, [id, data.preferredCategory], function (error, rows, fields){
-                            if (error) {
-                                console.log(error);
-                                res.sendStatus(400);
-                            }
-                            else {
-                                getCategoryQuery = `SELECT category FROM DrinkCategories WHERE id = ?;`;
-                                db.pool.query(getCategoryQuery, [data.preferredCategory], function (error, rows, fields){
-                                    if (error){
-                                        console.log(error);
-                                        res.sendStatus(400);
-                                    }
-                                    else{
-                                        console.log("CAT REQ: ", rows);
-                                        let cat = rows[0].category;
-                                        res.send({customerid: id, firstName: data.firstName, lastName: data.lastName, preferredCategory: cat});
-                                    }
-                                })
-                            }
-                        })            
+                    db.pool.query(query2, [id, data.preferredCategory], function (error, rows, fields) {
+                        if (error) {
+                            console.log(error);
+                            res.sendStatus(400);
+                        }
+                        else {
+                            getCategoryQuery = `SELECT category FROM DrinkCategories WHERE id = ?;`;
+                            db.pool.query(getCategoryQuery, [data.preferredCategory], function (error, rows, fields) {
+                                if (error) {
+                                    console.log(error);
+                                    res.sendStatus(400);
+                                }
+                                else {
+                                    console.log("CAT REQ: ", rows);
+                                    let cat = rows[0].category;
+                                    res.send({ customerid: id, firstName: data.firstName, lastName: data.lastName, preferredCategory: cat });
+                                }
+                            })
+                        }
+                    })
                 }
             })
         }
@@ -523,37 +527,37 @@ app.put('/put-category-ajax', function (req, res, next) {
 /*COCKTAIL INGREDIENTS*/
 app.get('/cocktailIngredients', function (req, res) {
     let query1 = "SELECT * FROM Cocktail_has_Ingredients;";
-    let query2 = `SELECT id, ingredientName FROM Ingredients;`; 
-    let query3 = `SELECT id, name from Cocktails;`;      
+    let query2 = `SELECT id, ingredientName FROM Ingredients;`;
+    let query3 = `SELECT id, name from Cocktails;`;
 
     db.pool.query(query1, function (error, rows, fields) {
-        if(error){
+        if (error) {
             console.log(error);
             res.sendStatus(400);
         }
-        else{
+        else {
             let data = rows;
             db.pool.query(query2, function (error, rows, fields) {
-                if (error){
+                if (error) {
                     console.log(error);
                     res.sendStatus(error);
                 }
-                else{
+                else {
                     let ingredients = rows;
                     db.pool.query(query3, function (error, rows, fields) {
-                        if(error){
+                        if (error) {
                             console.log(error);
                             res.sendStatus(400);
                         }
-                        else{
+                        else {
                             let cocktails = rows;
                             res.render('cocktailIngredients', { data, cocktails, ingredients })
                         }
                     })
                 }
             })
-        }                  
-    })                                                      
+        }
+    })
 });
 
 // COCKTAILS INGREDIENTS ADD
@@ -566,15 +570,14 @@ app.post('/add-cocktailIngredient-ajax', function (req, res) {
 
     // create a query and run it on the DB
     let query1 = `INSERT INTO Cocktail_has_Ingredients (cocktailID, ingredientID, amountUsed) VALUES ( ?, ?, ?);`;
-    
+
     db.pool.query(query1, [cocktailID, ingredientID, amount], function (error, rows, fields) {
 
-        if (error){
+        if (error) {
             console.log(error);
             res.send(400);
         }
-        else
-        {
+        else {
             query2 = "SELECT * FROM Cocktail_has_Ingredients;";
             db.pool.query(query2, function (error, rows, fields) {
                 res.send(rows);
@@ -629,43 +632,43 @@ app.put('/update-cocktailIngredients-ajax', function (req, res) {
                 }
             })
         }
-    }) 
+    })
 })
 
 /*COCKTAIL TOOLS*/
 app.get('/cocktailTools', function (req, res) {
     let query1 = "SELECT * FROM Cocktail_has_Tools;";
     let query2 = `SELECT id, name FROM Cocktails;`;
-    let query3 = `SELECT id, toolName FROM Tools;`;               
+    let query3 = `SELECT id, toolName FROM Tools;`;
 
     db.pool.query(query1, function (error, rows, fields) {
-        if(error){
+        if (error) {
             console.log(error);
             res.sendStatus(400);
         }
-        else{
+        else {
             let data = rows;
-            db.pool.query(query2, function(error, rows, fields) {
-                if (error){
+            db.pool.query(query2, function (error, rows, fields) {
+                if (error) {
                     console.log(error);
                     res.sendStatus(400);
                 }
-                else{
+                else {
                     let cocktails = rows;
-                    db.pool.query(query3, function(error, rows, fields) {
-                        if (error){
+                    db.pool.query(query3, function (error, rows, fields) {
+                        if (error) {
                             console.log(error);
                             res.sendStatus(400);
                         }
-                        else{
+                        else {
                             let tools = rows;
                             res.render('cocktailTools', { data, cocktails, tools });
                         }
                     })
                 }
             })
-        }                  
-    })                                                      
+        }
+    })
 });
 
 //Cocktails+Tools ADD
@@ -675,15 +678,14 @@ app.post('/add-cocktailTool-ajax', function (req, res) {
 
     // create a query and run it on the DB
     let query1 = `INSERT INTO Cocktail_has_Tools (cocktailID, toolID) VALUES (?, ?);`;
-    
+
     db.pool.query(query1, [data.cocktailID, data.toolID], function (error, rows, fields) {
 
-        if (error){
+        if (error) {
             console.log(error);
             res.send(400);
         }
-        else
-        {
+        else {
             query2 = `SELECT * FROM Cocktail_has_Tools;`;
             db.pool.query(query2, function (error, rows, fields) {
                 res.send(rows);
@@ -722,7 +724,7 @@ app.put('/update-cocktailTool-ajax', function (req, res) {
                 }
             })
         }
-    }) 
+    })
 })
 
 // cocktails + tools DELETE
