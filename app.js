@@ -526,7 +526,19 @@ app.put('/put-category-ajax', function (req, res, next) {
 
 /*COCKTAIL INGREDIENTS*/
 app.get('/cocktailIngredients', function (req, res) {
-    let query1 = "SELECT * FROM Cocktail_has_Ingredients;";
+    let query1 = `SELECT 
+    Cocktail_has_Ingredients.cocktailIngredientsID,
+    Cocktails.name AS Cocktail_Name,
+    Ingredients.ingredientName AS Ingredient_Name,
+    Cocktail_has_Ingredients.amountUsed
+FROM 
+    Cocktail_has_Ingredients
+LEFT JOIN 
+    Cocktails ON Cocktail_has_Ingredients.cocktailID = Cocktails.id
+LEFT JOIN 
+    Ingredients ON Cocktail_has_Ingredients.ingredientID = Ingredients.id
+ORDER BY 
+    Cocktail_has_Ingredients.cocktailIngredientsID;`;
     let query2 = `SELECT id, ingredientName FROM Ingredients;`;
     let query3 = `SELECT id, name from Cocktails;`;
 

@@ -32,8 +32,8 @@
     {{#each data}}
     <tr data-value={{this.cocktailIngredientsID}}>
       <td>{{this.cocktailIngredientsID}}</td>
-      <td>{{this.cocktailID}}</td>
-      <td>{{this.ingredientID}}</td>
+      <td>{{this.Cocktail_Name}}</td>
+      <td>{{this.Ingredient_Name}}</td>
       <td>{{this.amountUsed}}</td>
       <td><button class="delete-button" onclick="deleteCocktailIngredient({{this.cocktailIngredientsID}})">Delete</button></td>
     </tr>
