@@ -42,14 +42,26 @@
 </table>
 
 <h3>ADD RELATIONSHIP:</h3>
-<form id="add-cocktail-ingredient-form-ajax">
-  <label for="input-cocktailID">Cocktail ID: </label>
-    <input type="text" name="input-cocktailID" id="input-cocktailID"><br>
-  <label for="input-ingredientID">Ingredient ID: </label>
-    <input type="text" name="input-ingredientID" id="input-ingredientID">
+<form>
+<label for="input-name">Choose Cocktail: </label>
+    <select name="input-name" id="input-cocktailID" onchange="populateFields(this.value)">
+        <option value="">Select a Cocktail</option>
+        {{#each cocktails}}
+        <option value="{{this.id}}">{{this.name}}</option>
+        {{/each}}
+    </select>
     <br>
-  <label for="input-cocktailID">Amount Used: </label>
-    <input type="text" name="input-amount" id="input-amount"><br>
+<label for="input-name">Choose Ingredient: </label>
+    <select name="input-name" id="input-ingredientID" onchange="populateFields(this.value)">
+        <option value="">Select an Ingredient</option>
+        {{#each ingredients}}
+        <option value="{{this.id}}">{{this.ingredientName}}</option>
+        {{/each}}
+    </select>
+    <br>
+<label for="input-amount">Amount used: </label>
+    <input type="text" name="input-amount" id="input-amount">
+    <br>
     <br>
     <input type="submit" class="submit-button" style="float: right;">
 </form>
