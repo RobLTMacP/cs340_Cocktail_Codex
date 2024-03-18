@@ -21,7 +21,6 @@
         {{@key}}
       </th>
       {{/each}}
-      <th>delete</th>
     </tr>
   </thead>
 
@@ -34,10 +33,11 @@
       <td>{{this.drinkCategoriesCustomersID}}</td>
       <td>{{this.drinkCategoryID}}</td>
       <td>{{this.customerID}}</td>
-      <td><button class="delete-button" onclick="deleteTool({{this.drinkCategoriesCustomersID}})">Delete</button></td>
     </tr>
     {{/each}}
   </tbody>
 </table>
-<p>CRUD Functionality for this Intersection table is handled on the "Customers" Page</p>
+<p>CRUD Functionality for this Intersection table is handled on the "Customers" Page.</p>
+<p>A bit of explanation: Customers must have a preferred drink category, so it's not possible</p>
+<p>to have a null value. Deleting the customer deletes the above relationship.</p>
 </div>
