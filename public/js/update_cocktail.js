@@ -46,7 +46,7 @@ updateCocktailForm.addEventListener("submit", function (e) {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
 
             // Add the new data to the table
-            updateRow(xhttp.response, data.id);
+            updateRow(data);
 
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {
@@ -58,16 +58,16 @@ updateCocktailForm.addEventListener("submit", function (e) {
     xhttp.send(JSON.stringify(data));
 })
 
-function updateRow(data, ID) {
-    let parsedData = JSON.parse(data);
-    console.log(parsedData);
+function updateRow(data) {
+    let parsedData = data;
+    console.log("Parsed Data: ", parsedData);
 
     let table = document.getElementById("cocktails-table");
 
     for (let i = 0, row; row = table.rows[i]; i++) {
         //iterate through rows
         //rows would be accessed using the "row" variable assigned in the for loop
-        if (table.rows[i].getAttribute("data-value") == ID) {
+        if (table.rows[i].getAttribute("data-value") == data.id) {
 
             // Get the location of the row where we found the matching ingredient ID
             let updateRowIndex = table.getElementsByTagName("tr")[i];
