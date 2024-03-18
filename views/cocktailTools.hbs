@@ -52,7 +52,7 @@
     <br>
 <label for="input-name">Choose Tool: </label>
     <select name="input-name" id="input-toolID" onchange="populateFields(this.value)">
-        <option value="">Select a Tool:</option>
+        <option value="">Select a Tool</option>
         {{#each tools}}
         <option value="{{this.id}}">{{this.toolName}}</option>
         {{/each}}
