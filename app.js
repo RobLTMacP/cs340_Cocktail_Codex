@@ -649,7 +649,19 @@ app.put('/update-cocktailIngredients-ajax', function (req, res) {
 
 /*COCKTAIL TOOLS*/
 app.get('/cocktailTools', function (req, res) {
-    let query1 = "SELECT * FROM Cocktail_has_Tools;";
+    let query1 = `SELECT 
+    Cocktail_has_Tools.cocktailToolID,
+    Cocktails.name AS Cocktail_Name,
+    Tools.toolName AS Tool_Name
+FROM 
+    Cocktail_has_Tools
+LEFT JOIN 
+    Cocktails ON Cocktail_has_Tools.cocktailID = Cocktails.id
+LEFT JOIN 
+    Tools ON Cocktail_has_Tools.toolID = Tools.id
+ORDER BY 
+    Cocktail_has_Tools.cocktailToolID;
+`;
     let query2 = `SELECT id, name FROM Cocktails;`;
     let query3 = `SELECT id, toolName FROM Tools;`;
 
