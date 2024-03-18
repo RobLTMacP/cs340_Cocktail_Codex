@@ -185,6 +185,11 @@ textarea.large {
   background-color: var(--lightGold);
 }
 
+tr.thick-border {
+  border-bottom: 8px solid var(--lightGold); /* Adjust thickness and color as needed */
+}
+
+
 /*THESE DON'T REALLY WORK*/
 /* Radio buttons
 input[type="radio"] {}
