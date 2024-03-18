@@ -530,9 +530,6 @@ app.get('/cocktailIngredients', function (req, res) {
                         }
                         else{
                             let cocktails = rows;
-                            console.log("Cocktails: ", cocktails);
-                            console.log("Ingredients: ", ingredients);
-                            console.log("Data: ", data);
                             res.render('cocktailIngredients', { data, cocktails, ingredients })
                         }
                     })
