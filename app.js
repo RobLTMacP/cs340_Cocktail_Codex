@@ -150,10 +150,11 @@ app.put('/update-cocktail-ajax', function (req, res, next) {
     let data = req.body;
     console.log(req.body);
     let cocktailID = parseInt(data.id);
+    let categoryID = parseInt(data.drinkCategory)
 
     queryUpdateCocktail = `UPDATE Cocktails SET name = ?, instructions = ?, glassUsed = ?, drinkCategoryID = ? WHERE id = ?;`;
 
-    db.pool.query(queryUpdateCocktail, [data.name, data.instructions, data.glass, data.category, data.id], function (error, rows, fields) {
+    db.pool.query(queryUpdateCocktail, [data.name, data.instructions, data.glass, categoryID, data.id], function (error, rows, fields) {
         if (error) {
             console.log(error);
             res.sendStatus(400);

@@ -31,7 +31,7 @@ updateCocktailForm.addEventListener("submit", function (e) {
         name: nameValue,
         instructions: instructionValue,
         glass: glassValue,
-        category: categoryValue
+        drinkCategory: categoryValue
     }
 
     console.log("data is: ", data);
@@ -88,5 +88,50 @@ function updateRow(data) {
             selectMenu = document.getElementById("select-cocktail");
             selectMenu.options[i].text = parsedData.name;
         }
+    }
+}
+
+function populateFields(cocktailId) {
+    const cocktailData = Array.from(document.querySelectorAll("#cocktails-table tr")).find(row => row.dataset.value === cocktailId); // for finding info
+    const nameField = document.getElementById("input-update-name"); // for repeating name
+    const instructionsField = document.getElementById("input-update-instructions");
+    const glassField = document.getElementById("input-update-glass");
+    const categoryField = document.getElementById("input-update-category"); // for repeating category
+    console.log(nameField)
+    console.log("Category Field:", categoryField);
+    
+    
+    if (cocktailData) {
+        const name = cocktailData.children[1].textContent;
+        const instructions = cocktailData.children[2].textContent;
+        const glass = cocktailData.children[3].textContent;
+        const category = cocktailData.children[6].textContent;
+        
+        console.log("Category:", category);
+        
+        nameField.value = name;
+        instructionsField.value = instructions;
+        glassField.value = glass;
+    
+        //For the dropdown
+        let categoryFound = false;
+        for (const option of categoryField.options) {
+            if (option.textContent === category) {
+                option.selected = true;
+                categoryFound = true;
+                break;
+            }
+        }
+    
+        // Set default option if category not found
+        if (!categoryFound) {
+            categoryField.selectedIndex = 0;
+        }
+    
+    } else {
+        nameField.value = '';
+        instructionsield.value = '';
+        glassField.value = '';
+        categoryField.value = '';
     }
 }
