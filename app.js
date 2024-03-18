@@ -49,12 +49,29 @@ LEFT JOIN
 LEFT JOIN 
     Tools ON Cocktail_has_Tools.toolID = Tools.id
 GROUP BY 
-    Cocktails.id;`;               // Define our query
+    Cocktails.id;`;               
 
-    db.pool.query(query1, function (error, rows, fields) {    // Execute the query
+    db.pool.query(query1, function (error, rows, fields) {
 
-        res.render('cocktails', { data: rows });                  // Render the index.hbs file, and also send the renderer
-    })                                                      // an object where 'data' is equal to the 'rows' we
+        if(error) {
+            console.log(error);
+            res.sendStatus(400);
+        }
+        else {
+            let data = rows;
+            let query2 = `SELECT id, category FROM DrinkCategories;`;
+            db.pool.query(query2, function(error, rows, fields) {
+                if (error){
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                else {
+                    let categories = rows;
+                    res.render('cocktails', { data, categories });
+                }
+            })
+        }                  
+    })                                                      
 });
 
 // add a cocktail
@@ -614,13 +631,6 @@ app.put('/update-cocktailIngredients-ajax', function (req, res) {
         }
     }) 
 })
-
-
-
-/*COCKTAILS*/
-app.get('/cocktails', function (req, res) {
-    res.render('cocktails');
-});
 
 /*COCKTAIL TOOLS*/
 app.get('/cocktailTools', function (req, res) {

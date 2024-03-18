@@ -61,8 +61,13 @@
   <label for="input-glass">Glass Used: </label>
     <input type="text" name="input-glass" id="input-glass">
   <br>
-  <label for="input-cocktail-category">Cocktail Category by ID#: </label>
-    <input type="text" name="input-cocktail-category" id="input-cocktail-category">
+  <label for="input-name">Choose Category: </label>
+    <select name="input-name" id="input-cocktail-category" onchange="populateFields(this.value)">
+        <option value="">Select a Category</option>
+        {{#each categories}}
+        <option value="{{this.id}}">{{this.category}}</option>
+        {{/each}}
+    </select>
   
   </select>
 
