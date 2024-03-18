@@ -103,14 +103,31 @@ function populateFields(customerId) {
     const customerData = Array.from(document.querySelectorAll("#customers-table tr")).find(row => row.dataset.value === customerId); // for finding info
     const firstNameField = document.getElementById("input-update-firstName"); // for repeating firstName
     const lastNameField = document.getElementById("input-update-lastName"); // for repeating lastName
+    const categoryField = document.getElementById("select-update-category"); // for repeating category
     console.log(firstNameField)
     if (customerData) {
         const firstName = customerData.children[1].textContent;
         const lastName = customerData.children[2].textContent;
+        const categoryName = customerData.children[3].textContent;
         firstNameField.value = firstName;
         lastNameField.value = lastName;
+
+        //For the dropdown
+        let categoryFound = false;
+        for (const option of categoryField.options) {
+            if (option.textContent  === categoryName) {
+                option.selected = true;
+                categoryFound = true;
+                break;
+            }
+            if (!categoryFound) {
+                categoryField.selectedIndex = 0;
+            }
+        }
+        
     } else {
         firstNameField.value = '';
         lastNameField.value = '';
+        categoryField.selectedIndex = 0;
     }
 }

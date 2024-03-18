@@ -671,11 +671,6 @@ app.delete('/delete-cocktailTool-ajax', function (req, res, next) {
 })
 
 
-/*CUSTOMERS*/
-app.get('/customers', function (req, res) {
-    res.render('customers');
-});
-
 /*DRINK CATEGORIES CUSTOMERS*/
 app.get('/drinkCategoriesCustomers', function (req, res) {
     let query1 = "SELECT * FROM DrinkCategories_has_Customers;";               // Define our query

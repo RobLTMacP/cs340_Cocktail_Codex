@@ -58,10 +58,6 @@ form {
   box-sizing: border-box;
 }
 
-.navbar {
-  padding: 1px 1%;
-  color: var(--superGold);
-}
 
 a:link,
 a:visited,
@@ -69,6 +65,38 @@ a:hover,
 a:active {
   color: var(--superGold);
   text-decoration: none;
+}
+
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--darkGold);
+  padding: 4px 1%;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 10px;
+  margin-right: 1%;
+  margin-left: 1%;
+}
+
+.center-separator {
+  color: var(--lightGold);
+  /*font-size: 30px;*/
+  vertical-align: middle;
+  cursor: default;
+}
+
+.small-separator {
+  color: var(--darkGold);
+  cursor: default;
+}
+
+.title {
+  color: var(--superGold);
 }
 
 img {
