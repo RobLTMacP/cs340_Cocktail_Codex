@@ -14,12 +14,12 @@ updateCocktailToolForm.addEventListener("submit", function (e) {
     let inputcocktailID = document.getElementById("input-update-cocktailID");
     let inputToolID = document.getElementById("input-update-toolID");
 
-    console.log("updatejs has vals: ", inputCocktailToolID, inputToolID, inputcocktailID );
-
     // Get the values from the form fields
     let cocktailToolIDValue = inputCocktailToolID.value;
     let cockIDValue = inputcocktailID.value;
     let toolIDValue = inputToolID.value;
+
+    console.log("updatejs has vals: ", cocktailToolIDValue, toolIDValue, cockIDValue );
 
     // Put our data we want to send in a javascript object
     let data = {
