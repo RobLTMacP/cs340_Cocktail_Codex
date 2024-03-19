@@ -12,7 +12,7 @@ updateCategoryForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
     // Get form fields we need to get data from
-    let inputID = document.getElementById("mySelect");
+    let inputID = document.getElementById("category-select");
     let inputCategory = document.getElementById("input-update-name");
     let inputDescription = document.getElementById("input-update-description");
 
@@ -74,7 +74,7 @@ function updateRow(data, ID) {
             td2.innerHTML = parsedData[0].description;
 
             // Update dropdown menu
-            selectMenu = document.getElementById("mySelect");
+            selectMenu = document.getElementById("category-select");
             selectMenu.options[i].text = parsedData[0].category;
         }
     }
