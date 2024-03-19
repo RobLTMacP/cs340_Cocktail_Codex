@@ -53,7 +53,7 @@ LEFT JOIN
 LEFT JOIN 
     Tools ON Cocktail_has_Tools.toolID = Tools.id
     LEFT JOIN 
-    DrinkCategories ON Cocktails.drinkCategoryID = DrinkCategories.id -- This is the new JOIN to include the category name
+    DrinkCategories ON Cocktails.drinkCategoryID = DrinkCategories.id
     GROUP BY 
     Cocktails.id;`;
 
