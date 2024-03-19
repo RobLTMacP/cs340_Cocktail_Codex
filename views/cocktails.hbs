@@ -38,7 +38,7 @@
             <td>{{this.glassUsed}}</td>
             <td>{{this.Tools_Used}}</td>
             <td>{{this.Ingredients_Amounts}}</td>
-            <td>{{this.cocktailCategory}}</td>
+            <td>{{this.Category_Name}}</td>
             <td><button class="delete-button" onclick="deleteCocktail({{this.id}})">Delete</button></td>
         </tr>
         {{/each}}
@@ -62,7 +62,7 @@
     <input type="text" name="input-glass" id="input-glass">
   <br>
   <label for="input-name">Choose Category: </label>
-    <select name="input-name" id="input-cocktail-category" onchange="populateFields(this.value)">
+    <select name="input-name" id="input-cocktail-category">
         <option value="">Select a Category</option>
         {{#each categories}}
         <option value="{{this.id}}">{{this.category}}</option>
@@ -99,7 +99,7 @@
     <input type="text" name="input-update-glass" id="input-update-glass">
     <br>
     <label for="input-name">Choose Category: </label>
-    <select name="input-name" id="input-update-category" onchange="populateFields(this.value)">
+    <select name="input-name" id="input-update-category">
         <option value="">Select a Category</option>
         {{#each categories}}
         <option value="{{this.id}}">{{this.category}}</option>

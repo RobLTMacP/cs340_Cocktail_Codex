@@ -82,7 +82,7 @@ function updateRow(data) {
             td1.innerHTML = parsedData.name;
             td2.innerHTML = parsedData.instructions;
             td3.innerHTML = parsedData.glass;
-            td4.innerHTML = parsedData.category;
+            td4.innerHTML = parsedData.drinkCategory;
 
             // Update dropdown menu
             selectMenu = document.getElementById("select-cocktail");
