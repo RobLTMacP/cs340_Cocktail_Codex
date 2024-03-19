@@ -109,5 +109,12 @@ addRowToTable = (data) => {
 
     // Add the row to the table
     currentTable.appendChild(row);
+
+    // update the dropdown for update
+    let selectMenu = document.getElementById("select-cocktailIngredientID");
+    let option = document.createElement("option");
+    option.text = newRow.cocktailIngredientsID;
+    option.value = newRow.cocktailIngredientsID;
+    selectMenu.add(option);
 }
 

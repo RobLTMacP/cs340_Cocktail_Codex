@@ -38,8 +38,6 @@ addCocktailToolForm.addEventListener("submit", function (e) {
             // Clear the input fields for another transaction
             inputcocktailID.value = '';
             inputToolID.value = '';
-
-
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {
             console.log("There was an error with the input.")
@@ -51,8 +49,6 @@ addCocktailToolForm.addEventListener("submit", function (e) {
 
 })
 
-// Creates a single row from an Object representing a single record from 
-// bsg_people
 addRowToTable = (data) => {
     console.log("Received data:", data);
 
@@ -101,9 +97,9 @@ addRowToTable = (data) => {
 
     // Find drop down menu, create a new option, fill data in the option,
     // then append option to drop down menu so newly created rows via ajax will be found in it without needing a refresh
-    // let selectMenu = document.getElementById("category-select");
-    // let option = document.createElement("option");
-    // option.text = newRow.category;
-    // option.value = newRow.id;
-    // selectMenu.add(option);
+    let selectMenu = document.getElementById("select-cocktailtoolID");
+    let option = document.createElement("option");
+    option.text = newRow.cocktailToolID;
+    option.value = newRow.cocktailToolID;
+    selectMenu.add(option);
 }// 
